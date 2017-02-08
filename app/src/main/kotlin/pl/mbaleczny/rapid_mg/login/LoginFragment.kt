@@ -1,16 +1,15 @@
 package pl.mbaleczny.rapid_mg.login
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.twitter.sdk.android.core.Callback
-import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.TwitterException
-import com.twitter.sdk.android.core.TwitterSession
 import com.twitter.sdk.android.core.identity.TwitterLoginButton
 import pl.mbaleczny.rapid_mg.R
 import javax.inject.Inject
@@ -37,15 +36,26 @@ class LoginFragment : Fragment(), LoginContract.View {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v: View? = inflater?.inflate(R.layout.fragment_login, container, false)
         loginButton = v?.findViewById(R.id.fragment_login_twitter_login_button) as TwitterLoginButton
-        initTwitterLoginButton()
+        loginButton.callback = presenter.getTwitterCallback()
         return v
     }
 
-    override fun showToast(msg: String) {
+    override fun onUserLogged(userName: String?) {
+        val msg: String = String.format("Logged in successfully. \nWelcome %s!", userName)
+        showToast(msg)
+        setResultAndFinish(Activity.RESULT_OK)
+    }
+
+    override fun onFailedLogin(exception: TwitterException?) {
+        Log.e(javaClass.simpleName, exception?.message as String)
+        if (exception?.message != null) showToast(R.string.fail_to_login_message)
+    }
+
+    fun showToast(msg: String) {
         Toast.makeText(activity.applicationContext, msg, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showToast(msgRes: Int) {
+    fun showToast(msgRes: Int) {
         Toast.makeText(activity.applicationContext, msgRes, Toast.LENGTH_SHORT).show()
     }
 
@@ -59,21 +69,9 @@ class LoginFragment : Fragment(), LoginContract.View {
         presenter.unBind()
     }
 
-    override fun setResultAndFinish(resultCode: Int) {
+    fun setResultAndFinish(resultCode: Int) {
         activity.setResult(resultCode)
         activity.finish()
     }
 
-    private fun initTwitterLoginButton() {
-        loginButton.callback = object : Callback<TwitterSession>() {
-
-            override fun success(result: Result<TwitterSession>?) {
-                presenter.onSuccessLogin(result)
-            }
-
-            override fun failure(exception: TwitterException?) {
-                presenter.onFailedLogin(exception)
-            }
-        }
-    }
 }

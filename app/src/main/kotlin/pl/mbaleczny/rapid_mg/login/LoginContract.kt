@@ -1,6 +1,6 @@
 package pl.mbaleczny.rapid_mg.login
 
-import com.twitter.sdk.android.core.Result
+import com.twitter.sdk.android.core.Callback
 import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.TwitterSession
 import pl.mbaleczny.rapid_mg.BasePresenter
@@ -12,14 +12,12 @@ import pl.mbaleczny.rapid_mg.BaseView
 interface LoginContract {
 
     interface View : BaseView {
-        fun setResultAndFinish(resultCode: Int)
-        fun showToast(msg: String)
-        fun showToast(msgRes: Int)
+        fun onUserLogged(userName: String?)
+        fun onFailedLogin(exception: TwitterException?)
     }
 
     interface Presenter : BasePresenter<View> {
-        fun onSuccessLogin(result: Result<TwitterSession>?)
-        fun onFailedLogin(exception: TwitterException?)
+        fun getTwitterCallback(): Callback<TwitterSession>
     }
 
 }
