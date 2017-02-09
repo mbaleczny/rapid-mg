@@ -14,9 +14,9 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="b8ec1fbe940c992bae42c1da71edde7269e6bac5" />
+            android:value="YOUR_FABRIC_API_KEY" />
 
-        <activity android:name=".news.NewsActivity">
+        <activity android:name=".tweetList.ui.TweetListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
