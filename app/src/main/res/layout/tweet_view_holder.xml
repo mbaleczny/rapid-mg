@@ -7,14 +7,14 @@
 
     <ImageView
         android:id="@+id/tweet_vh_avatar"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="@dimen/tweet_vh_avatar_size"
+        android:layout_height="@dimen/tweet_vh_avatar_size"
+        android:layout_marginBottom="@dimen/tweet_vh_avatar_margin_end"
+        android:layout_marginEnd="@dimen/tweet_vh_avatar_margin_end"
+        android:layout_marginLeft="@dimen/tweet_vh_avatar_margin_left"
+        android:layout_marginRight="@dimen/tweet_vh_avatar_margin_end"
+        android:layout_marginStart="@dimen/tweet_vh_avatar_margin_left"
+        android:layout_marginTop="@dimen/tweet_vh_avatar_margin_left"
         tools:ignore="ContentDescription"
         tools:src="#CCCCCC" />
 
@@ -27,7 +27,7 @@
         android:layout_toRightOf="@+id/tweet_vh_avatar"
         android:text="Mariusz B"
         android:textColor="@android:color/black"
-        android:textSize="16sp" />
+        android:textSize="@dimen/tweet_vh_text_size" />
 
     <TextView
         android:id="@+id/tweet_vh_screen_name"
@@ -38,7 +38,7 @@
         android:layout_toEndOf="@id/tweet_vh_avatar"
         android:layout_toRightOf="@id/tweet_vh_avatar"
         android:text="\@mariuszbaleczny"
-        android:textSize="14sp" />
+        android:textSize="@dimen/tweet_vh_screen_name_size" />
 
     <TextView
         android:id="@+id/tweet_vh_timestamp"
@@ -50,7 +50,7 @@
         android:layout_toRightOf="@id/tweet_vh_screen_name"
         android:paddingLeft="@dimen/tweet_vh_timestamp_left_padding"
         android:text="• 13/02/2017"
-        android:textSize="14sp" />
+        android:textSize="@dimen/tweet_vh_screen_name_size" />
 
     <TextView
         android:id="@+id/tweet_vh_text"
@@ -60,7 +60,7 @@
         android:layout_marginLeft="@dimen/tweet_vh_text_left_margin"
         android:text="Just chilln bro"
         android:textColor="#292f33"
-        android:textSize="16sp" />
+        android:textSize="@dimen/tweet_vh_text_size" />
 
     <com.twitter.sdk.android.tweetui.ToggleImageButton
         android:id="@+id/tw__tweet_like_button"

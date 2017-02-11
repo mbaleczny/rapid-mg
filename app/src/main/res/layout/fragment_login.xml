@@ -12,7 +12,7 @@
         android:gravity="center"
         android:padding="@dimen/welcome_text_padding"
         android:text="@string/welcome_message"
-        android:textSize="@dimen/large_text_size"
+        android:textSize="@dimen/title_large_text_size"
         android:textStyle="bold" />
 
     <com.twitter.sdk.android.core.identity.TwitterLoginButton
