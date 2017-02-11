@@ -90,10 +90,10 @@ class TweetListActivity : AppCompatActivity() {
 
         val userId = TwitterCore.getInstance().sessionManager.activeSession.userId
 
-        val newsFragment = TweetListFragment.newInstance(userId, newsComponent?.newsPresenter()!!)
+        val tweetListFragment = TweetListFragment.newInstance(userId, newsComponent?.newsPresenter()!!)
         val favoritesFragment = TweetListFragment.newInstance(userId, newsComponent?.favoritesPresenter()!!)
 
-        addScreen(newsFragment)
+        addScreen(tweetListFragment)
         addScreen(favoritesFragment)
 
         tabLayout.getTabAt(0)?.setIcon(R.drawable.ic_home)
