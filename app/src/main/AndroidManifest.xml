@@ -16,7 +16,7 @@
             android:name="io.fabric.ApiKey"
             android:value="YOUR_FABRIC_API_KEY" />
 
-        <activity android:name=".tweetList.ui.TweetListActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,6 +26,11 @@
 
         <activity
             android:name=".login.LoginActivity"
+            android:label="@string/log_in"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".tweetList.ui.TweetListActivity"
             android:theme="@style/AppTheme" />
 
     </application>

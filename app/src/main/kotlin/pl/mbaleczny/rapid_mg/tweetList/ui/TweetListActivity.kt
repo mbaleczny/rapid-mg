@@ -6,9 +6,8 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.Menu
-import android.widget.Toast
+import android.view.MenuItem
 import com.twitter.sdk.android.core.TwitterCore
 import kotlinx.android.synthetic.main.activity_tweet_list.*
 import pl.mbaleczny.rapid_mg.R
@@ -24,7 +23,6 @@ import pl.mbaleczny.rapid_mg.tweetList.adapter.TweetListPagerAdapter
 class TweetListActivity : AppCompatActivity() {
 
     companion object {
-        val LOGIN_REQUEST: Int = 100
         var newsComponent: NewsComponent? = null
     }
 
@@ -36,39 +34,33 @@ class TweetListActivity : AppCompatActivity() {
         initToolbar()
         initTabLayout()
 
-        when (TwitterCore.getInstance().sessionManager.activeSession) {
-            null -> goToLoginScreen()
-            else -> goToUserMainScreen()
-        }
+        goToUserMainScreen()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        // prepare ActionBar
+        setupActionBar()
+        setupMenu(menu)
+        return true
+    }
+
+    private fun setupActionBar() {
         val ab: ActionBar? = supportActionBar
         ab?.setHomeButtonEnabled(false)
         ab?.setDisplayHomeAsUpEnabled(false)
         ab?.setDisplayShowHomeEnabled(false)
-        return true
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        Log.d(javaClass.simpleName,
-                String.format("requestCode = %d, resultCode = %d, data = %s",
-                        requestCode,
-                        resultCode,
-                        data?.extras.toString()))
-
-        when (requestCode) {
-            LOGIN_REQUEST -> goToUserMainScreen()
-
-            else -> Toast.makeText(this, R.string.unsupported_request_code_message, Toast.LENGTH_LONG).show()
+    private fun setupMenu(menu: Menu?) {
+        menuInflater.inflate(R.menu.tweet_list_activity_menu, menu)
+        val logoutItem: MenuItem? = menu?.findItem(R.id.action_logout)
+        logoutItem?.setOnMenuItemClickListener { item ->
+            TwitterCore.getInstance().logOut()
+            val i = Intent(this, LoginActivity::class.java)
+            Intent.makeRestartActivityTask(i.component)
+            finish()
+            startActivity(i)
+            true
         }
-    }
-
-    private fun goToLoginScreen() {
-        val i = Intent(this, LoginActivity::class.java)
-        startActivityForResult(i, LOGIN_REQUEST)
     }
 
     private fun initTabLayout() {

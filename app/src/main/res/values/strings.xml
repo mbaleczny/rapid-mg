@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">rapid-mg</string>
     <string name="unsupported_request_code_message">Unsupported request code.</string>
-    <string name="fail_to_login_message">Failed to login.</string>
     <string name="no_tweets">No Tweets</string>
     <string name="timeline">Timeline</string>
     <string name="favorites">Favorites</string>
     <string name="welcome_message">Welcome to Rapid-mg!</string>
     <string name="logout">Logout</string>
+    <string name="log_in">Log in</string>
 </resources>

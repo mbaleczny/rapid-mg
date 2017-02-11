@@ -1,6 +1,5 @@
 package pl.mbaleczny.rapid_mg.login
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -12,6 +11,7 @@ import android.widget.Toast
 import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.identity.TwitterLoginButton
 import pl.mbaleczny.rapid_mg.R
+import pl.mbaleczny.rapid_mg.tweetList.ui.TweetListActivity
 import javax.inject.Inject
 
 /**
@@ -43,20 +43,12 @@ class LoginFragment : Fragment(), LoginContract.View {
     override fun onUserLogged(userName: String?) {
         val msg: String = String.format("Logged in successfully. \nWelcome %s!", userName)
         showToast(msg)
-        setResultAndFinish(Activity.RESULT_OK)
+        goToTweetList()
     }
 
     override fun onFailedLogin(exception: TwitterException?) {
         Log.e(javaClass.simpleName, exception?.message as String)
-        if (exception?.message != null) showToast(R.string.fail_to_login_message)
-    }
-
-    fun showToast(msg: String) {
-        Toast.makeText(activity.applicationContext, msg, Toast.LENGTH_SHORT).show()
-    }
-
-    fun showToast(msgRes: Int) {
-        Toast.makeText(activity.applicationContext, msgRes, Toast.LENGTH_SHORT).show()
+        showToast(exception?.message as String)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -69,9 +61,12 @@ class LoginFragment : Fragment(), LoginContract.View {
         presenter.unBind()
     }
 
-    fun setResultAndFinish(resultCode: Int) {
-        activity.setResult(resultCode)
-        activity.finish()
+    private fun showToast(msg: String) {
+        Toast.makeText(activity.applicationContext, msg, Toast.LENGTH_SHORT).show()
     }
 
+    private fun goToTweetList() {
+        activity.finish()
+        startActivity(Intent(activity, TweetListActivity::class.java))
+    }
 }
