@@ -7,60 +7,42 @@
 
     <ImageView
         android:id="@+id/tweet_vh_avatar"
-        android:layout_width="@dimen/tweet_vh_avatar_size"
-        android:layout_height="@dimen/tweet_vh_avatar_size"
-        android:layout_marginBottom="@dimen/tweet_vh_avatar_margin_end"
-        android:layout_marginEnd="@dimen/tweet_vh_avatar_margin_end"
-        android:layout_marginLeft="@dimen/tweet_vh_avatar_margin_left"
-        android:layout_marginRight="@dimen/tweet_vh_avatar_margin_end"
-        android:layout_marginStart="@dimen/tweet_vh_avatar_margin_left"
-        android:layout_marginTop="@dimen/tweet_vh_avatar_margin_left"
+        style="@style/TweetAvatar"
         tools:ignore="ContentDescription"
         tools:src="#CCCCCC" />
 
     <TextView
         android:id="@+id/tweet_vh_full_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/FullNameText"
         android:layout_alignTop="@+id/tweet_vh_avatar"
         android:layout_toEndOf="@+id/tweet_vh_avatar"
         android:layout_toRightOf="@+id/tweet_vh_avatar"
-        android:text="Mariusz B"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/tweet_vh_text_size" />
+        android:text="Mariusz B" />
 
     <TextView
         android:id="@+id/tweet_vh_screen_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/AttributeText"
         android:layout_alignBottom="@id/tweet_vh_avatar"
         android:layout_below="@id/tweet_vh_full_name"
         android:layout_toEndOf="@id/tweet_vh_avatar"
         android:layout_toRightOf="@id/tweet_vh_avatar"
-        android:text="\@mariuszbaleczny"
-        android:textSize="@dimen/tweet_vh_screen_name_size" />
+        android:text="\@mariuszbaleczny" />
 
     <TextView
         android:id="@+id/tweet_vh_timestamp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/Timestamp"
         android:layout_alignBottom="@id/tweet_vh_avatar"
         android:layout_below="@id/tweet_vh_full_name"
         android:layout_toEndOf="@id/tweet_vh_screen_name"
         android:layout_toRightOf="@id/tweet_vh_screen_name"
-        android:paddingLeft="@dimen/tweet_vh_timestamp_left_padding"
-        android:text="• 13/02/2017"
-        android:textSize="@dimen/tweet_vh_screen_name_size" />
+        android:text="• 13/02/2017" />
 
     <TextView
         android:id="@+id/tweet_vh_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/TweetText"
         android:layout_below="@id/tweet_vh_avatar"
-        android:layout_marginLeft="@dimen/tweet_vh_text_left_margin"
         android:text="Just chilln bro"
-        android:textColor="#292f33"
-        android:textSize="@dimen/tweet_vh_text_size" />
+        android:textSize="@dimen/tw_text_size_large" />
 
     <com.twitter.sdk.android.tweetui.ToggleImageButton
         android:id="@+id/tw__tweet_like_button"

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/user_panel_avatar"
+        android:layout_width="@dimen/tw_user_avatar_size"
+        android:layout_height="@dimen/tw_user_avatar_size"
+        android:layout_margin="@dimen/user_panel_avatar_margin"
+        tools:ignore="ContentDescription"
+        tools:src="#CCCCCC" />
+
+    <TextView
+        android:id="@+id/user_panel_full_name"
+        style="@style/FullNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/user_panel_avatar"
+        android:layout_alignStart="@+id/user_panel_avatar"
+        android:layout_below="@+id/user_panel_avatar"
+        android:text="Mariusz Baleczny" />
+
+    <TextView
+        android:id="@+id/user_panel_screen_name"
+        style="@style/ScreenName"
+        android:layout_alignLeft="@+id/user_panel_full_name"
+        android:layout_alignStart="@+id/user_panel_full_name"
+        android:layout_below="@+id/user_panel_full_name"
+        android:text="\@mariuszbaleczny" />
+
+    <TextView
+        android:id="@+id/user_panel_summary"
+        style="@style/ProfileSummary"
+        android:layout_alignLeft="@+id/user_panel_screen_name"
+        android:layout_alignStart="@+id/user_panel_screen_name"
+        android:layout_below="@+id/user_panel_screen_name"
+        android:text="Very important things about profile." />
+
+    <TextView
+        android:id="@+id/user_panel_following_counter"
+        style="@style/AttributeText"
+        android:layout_alignLeft="@+id/user_panel_summary"
+        android:layout_alignStart="@+id/user_panel_summary"
+        android:layout_below="@+id/user_panel_summary"
+        android:layout_marginBottom="@dimen/tw_user_panel_bottom_margin"
+        android:text="5"
+        android:textSize="@dimen/tw_text_size_large"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/user_panel_following_counter_label"
+        style="@style/AttributeText"
+        android:layout_alignBottom="@+id/user_panel_following_counter"
+        android:layout_marginLeft="@dimen/tw_user_panel_top_bottom_margin"
+        android:layout_marginStart="@dimen/tw_user_panel_top_bottom_margin"
+        android:layout_toEndOf="@+id/user_panel_following_counter"
+        android:layout_toRightOf="@+id/user_panel_following_counter"
+        android:text="@string/following"
+        android:textSize="@dimen/tw_text_size_medium" />
+
+    <TextView
+        android:id="@+id/user_panel_followers_counter"
+        style="@style/AttributeText"
+        android:layout_alignBottom="@+id/user_panel_following_counter_label"
+        android:layout_marginLeft="@dimen/tw_user_panel_top_bottom_margin"
+        android:layout_marginStart="@dimen/tw_user_panel_top_bottom_margin"
+        android:layout_toEndOf="@+id/user_panel_avatar"
+        android:layout_toRightOf="@+id/user_panel_avatar"
+        android:text="1"
+        android:textSize="@dimen/tw_text_size_large"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/user_panel_followers_counter_label"
+        style="@style/AttributeText"
+        android:layout_alignBottom="@+id/user_panel_following_counter"
+        android:layout_marginLeft="@dimen/tw_user_panel_top_bottom_margin"
+        android:layout_marginStart="@dimen/tw_user_panel_top_bottom_margin"
+        android:layout_toEndOf="@+id/user_panel_followers_counter"
+        android:layout_toRightOf="@+id/user_panel_followers_counter"
+        android:text="@string/followers"
+        android:textSize="@dimen/tw_text_size_medium" />
+
+</RelativeLayout>

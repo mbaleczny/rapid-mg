@@ -7,4 +7,7 @@
     <string name="welcome_message">Welcome to Rapid-mg!</string>
     <string name="logout">Logout</string>
     <string name="log_in">Log in</string>
+    <string name="internal_error_message">Application internal error occurred!</string>
+    <string name="following">FOLLOWING</string>
+    <string name="followers">FOLLOWERS</string>
 </resources>
