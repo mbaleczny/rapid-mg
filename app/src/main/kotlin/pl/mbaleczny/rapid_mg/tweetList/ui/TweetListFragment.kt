@@ -2,6 +2,7 @@ package pl.mbaleczny.rapid_mg.tweetList.ui
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -40,6 +41,7 @@ class TweetListFragment : Fragment(), TweetListContract.View {
 
     private var tweetList: RecyclerView? = null
     private var emptyLabel: TextView? = null
+    private var swipeRefresh: SwipeRefreshLayout? = null
 
     private var adapter: TweetsRecyclerAdapter? = null
 
@@ -57,17 +59,22 @@ class TweetListFragment : Fragment(), TweetListContract.View {
 
         tweetList?.layoutManager = LinearLayoutManager(context)
         tweetList?.adapter = adapter
+
+        swipeRefresh = v?.findViewById(R.id.swipeRefreshLayout) as SwipeRefreshLayout
+        swipeRefresh?.setOnRefreshListener { loadData() }
+
         return v
     }
 
     override fun setTweets(data: List<Tweet>?) {
         adapter?.setTweets(data!!)
         emptyLabel?.visibility = if (data?.isEmpty() as Boolean) View.VISIBLE else View.GONE
+        swipeRefresh?.isRefreshing = false
     }
 
     override fun onResume() {
         super.onResume()
-        presenter.subscribe(userId)
+        loadData()
     }
 
     override fun showError(e: Throwable?) {
@@ -85,5 +92,9 @@ class TweetListFragment : Fragment(), TweetListContract.View {
 
     override fun showMessage(s: String) {
         Toast.makeText(context, s, Toast.LENGTH_SHORT).show()
+    }
+
+    fun loadData() {
+        presenter.subscribe(userId)
     }
 }
