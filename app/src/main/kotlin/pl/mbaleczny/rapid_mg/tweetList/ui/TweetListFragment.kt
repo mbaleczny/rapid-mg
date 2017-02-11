@@ -15,6 +15,7 @@ import com.twitter.sdk.android.core.models.Tweet
 import pl.mbaleczny.rapid_mg.R
 import pl.mbaleczny.rapid_mg.tweetList.TweetListContract
 import pl.mbaleczny.rapid_mg.tweetList.adapter.TweetsRecyclerAdapter
+import pl.mbaleczny.rapid_mg.util.USER_ID_ARG
 
 
 /**
@@ -23,11 +24,9 @@ import pl.mbaleczny.rapid_mg.tweetList.adapter.TweetsRecyclerAdapter
 class TweetListFragment : Fragment(), TweetListContract.View {
 
     companion object {
-        private val USER_ID = "user_id"
-
         fun newInstance(userId: Long, presenter: TweetListContract.Presenter): TweetListFragment {
             val args: Bundle = Bundle()
-            args.putLong(USER_ID, userId)
+            args.putLong(USER_ID_ARG, userId)
             val f = TweetListFragment()
             f.presenter = presenter
             f.arguments = args
@@ -47,7 +46,7 @@ class TweetListFragment : Fragment(), TweetListContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        userId = arguments?.getLong(USER_ID)
+        userId = arguments?.getLong(USER_ID_ARG)
         presenter.bindView(this)
     }
 
@@ -69,7 +68,6 @@ class TweetListFragment : Fragment(), TweetListContract.View {
     override fun setTweets(data: List<Tweet>?) {
         adapter?.setTweets(data!!)
         emptyLabel?.visibility = if (data?.isEmpty() as Boolean) View.VISIBLE else View.GONE
-        swipeRefresh?.isRefreshing = false
     }
 
     override fun onResume() {
@@ -88,10 +86,15 @@ class TweetListFragment : Fragment(), TweetListContract.View {
     }
 
     override fun hideProgress() {
+        swipeRefresh?.isRefreshing = false
     }
 
     override fun showMessage(s: String) {
         Toast.makeText(context, s, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun openUserActivity(id: Long) {
+
     }
 
     fun loadData() {

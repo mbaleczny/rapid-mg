@@ -9,9 +9,7 @@ import pl.mbaleczny.rapid_mg.data.TwitterDataSource
 class FavoritesPresenter(twitterDataSource: TwitterDataSource)
     : BaseTweetListPresenter(twitterDataSource) {
 
-    override fun getTweets(userId: Long?): Disposable {
-        return twitterDataSource.favorites(userId, 20)
-                .subscribe({ view?.setTweets(it) }, { view?.showError(it) })
-    }
+    override fun getTweets(userId: Long?): Disposable =
+            applyObserver(twitterDataSource.favorites(userId, TWEETS_COUNT))
 
 }

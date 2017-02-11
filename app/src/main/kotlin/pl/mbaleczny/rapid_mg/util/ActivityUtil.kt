@@ -9,6 +9,8 @@ import pl.mbaleczny.rapid_mg.R
  * Created by mariusz on 04.02.17.
  */
 
+val USER_ID_ARG = "user_id"
+
 fun AppCompatActivity.showFragment(fragment: Fragment, addToBackStack: Boolean) {
     val existingFragment: Fragment? = supportFragmentManager.findFragmentById(R.id.activity_container)
 

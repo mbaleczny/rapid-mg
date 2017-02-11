@@ -16,6 +16,7 @@ interface TweetListContract {
         fun showError(e: Throwable?)
         fun hideProgress()
         fun showMessage(s: String)
+        fun openUserActivity(id: Long)
     }
 
     interface Presenter : BasePresenter<View>, TweetsRecyclerAdapter.onTweetAction {
