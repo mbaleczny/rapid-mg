@@ -57,32 +57,18 @@ class TweetListFragment : Fragment(), TweetListContract.View {
         emptyLabel = v?.findViewById(R.id.empty_list_label) as TextView
         adapter = TweetsRecyclerAdapter(context, presenter)
 
-        tweetList?.layoutManager = LinearLayoutManager(context)
-        tweetList?.adapter = adapter
+        initTweetList()
 
         swipeRefresh = v?.findViewById(R.id.swipeRefreshLayout) as SwipeRefreshLayout
-        swipeRefresh?.setOnRefreshListener {
-            adapter?.tweets?.clear()
-            presenter.subscribe()
-        }
-        presenter.bindView(this)
+        swipeRefresh?.setOnRefreshListener { presenter.loadFreshList() }
 
         return v
     }
 
-    override fun setTweets(data: List<Tweet>?) {
-        adapter?.setTweets(data!!)
-        emptyLabel?.visibility = if (data?.isEmpty() as Boolean) View.VISIBLE else View.GONE
-    }
-
     override fun onResume() {
         super.onResume()
-        presenter.loadNewerTweets()
-    }
-
-    override fun showError(e: Throwable?) {
-        Log.e(javaClass.simpleName, e?.message)
-        Toast.makeText(context, e?.message, Toast.LENGTH_SHORT).show()
+        presenter.bindView(this)
+        presenter.loadFreshList()
     }
 
     override fun onDestroyView() {
@@ -90,8 +76,18 @@ class TweetListFragment : Fragment(), TweetListContract.View {
         presenter.unBind()
     }
 
+    override fun setTweets(data: List<Tweet>?) {
+        adapter?.setTweets(data!!)
+    }
+
+    override fun showError(e: Throwable?) {
+        Log.e(javaClass.simpleName, e?.message)
+        Toast.makeText(context, e?.message, Toast.LENGTH_SHORT).show()
+    }
+
     override fun hideProgress() {
         swipeRefresh?.isRefreshing = false
+        emptyLabel?.visibility = if (adapter?.isEmpty() as Boolean) View.VISIBLE else View.GONE
     }
 
     override fun showMessage(s: String) {
@@ -102,5 +98,21 @@ class TweetListFragment : Fragment(), TweetListContract.View {
         val i = Intent(activity, UserActivity::class.java)
         i.putExtra(USER_ID_ARG, id)
         activity.startActivity(i)
+    }
+
+    private fun initTweetList() {
+        val layoutManager: LinearLayoutManager = LinearLayoutManager(context)
+        tweetList?.layoutManager = layoutManager
+        tweetList?.adapter = adapter
+        tweetList?.setOnScrollChangeListener(object : RecyclerView.OnScrollListener(), View.OnScrollChangeListener {
+            override fun onScrollChange(v: View?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) {
+                val firstVisibleItemPos = layoutManager.findFirstCompletelyVisibleItemPosition()
+                val lastVisibleItemPos = layoutManager.findLastCompletelyVisibleItemPosition()
+
+                if (firstVisibleItemPos != 0 && lastVisibleItemPos == adapter?.itemCount?.minus(1)) {
+                    presenter.loadOlderTweets()
+                }
+            }
+        })
     }
 }

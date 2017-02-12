@@ -13,6 +13,7 @@ import com.twitter.sdk.android.core.models.Tweet
 import com.twitter.sdk.android.core.models.User
 import com.twitter.sdk.android.tweetui.ToggleImageButton
 import pl.mbaleczny.rapid_mg.R
+import pl.mbaleczny.rapid_mg.tweetList.TweetListContract
 import pl.mbaleczny.rapid_mg.util.transformTweetDateTime
 
 
@@ -21,14 +22,14 @@ import pl.mbaleczny.rapid_mg.util.transformTweetDateTime
  */
 class TweetsRecyclerAdapter(val context: Context) : RecyclerView.Adapter<TweetsRecyclerAdapter.ViewHolder>() {
 
-    constructor(context: Context, listener: onTweetAction) : this(context) {
+    constructor(context: Context, listener: TweetListContract.Presenter) : this(context) {
         this.listener = listener
     }
 
     val tweets = mutableListOf<Tweet>()
     private val inflater = LayoutInflater.from(context)
 
-    var listener: onTweetAction? = null
+    var listener: TweetListContract.Presenter? = null
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         val view = inflater.inflate(R.layout.tweet_view_holder, parent, false)
@@ -49,8 +50,11 @@ class TweetsRecyclerAdapter(val context: Context) : RecyclerView.Adapter<TweetsR
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
+    fun isEmpty(): Boolean {
+        return tweets.isEmpty()
+    }
 
+    inner class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
         private var avatar: ImageView = itemView?.findViewById(R.id.tweet_vh_avatar) as ImageView
         private var fullName: TextView = itemView?.findViewById(R.id.tweet_vh_full_name) as TextView
         private var screen_name: TextView = itemView?.findViewById(R.id.tweet_vh_screen_name) as TextView
