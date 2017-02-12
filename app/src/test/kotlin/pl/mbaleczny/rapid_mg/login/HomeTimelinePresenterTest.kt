@@ -11,14 +11,14 @@ import org.mockito.Mockito
 import pl.mbaleczny.rapid_mg.data.TwitterRepo
 import pl.mbaleczny.rapid_mg.network.RxTwitterService
 import pl.mbaleczny.rapid_mg.tweetList.TweetListContract
-import pl.mbaleczny.rapid_mg.tweetList.presenter.TweetTimelinePresenter
+import pl.mbaleczny.rapid_mg.tweetList.presenter.HomeTimelinePresenter
 
 /**
  * Created by mariusz on 08.02.17.
  */
-class NewsPresenterTypeTest {
+class HomeTimelinePresenterTest {
 
-    private lateinit var presenter: TweetTimelinePresenter
+    private lateinit var presenter: HomeTimelinePresenter
 
     private var twitterService: RxTwitterService = mock()
     private var view: TweetListContract.View = mock()
@@ -28,7 +28,7 @@ class NewsPresenterTypeTest {
     @Before
     @Throws(Exception::class)
     fun setup() {
-        presenter = TweetTimelinePresenter(TwitterRepo(twitterService, scheduler))
+        presenter = HomeTimelinePresenter(TwitterRepo(twitterService, scheduler))
         presenter.bindView(view)
 
         whenever(twitterService.homeTimeline(eq(1), any(), anyOrNull(), anyOrNull()))

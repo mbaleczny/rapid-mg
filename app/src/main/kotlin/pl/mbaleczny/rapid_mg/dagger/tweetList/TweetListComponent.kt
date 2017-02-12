@@ -16,9 +16,9 @@ import pl.mbaleczny.rapid_mg.tweetList.ui.TweetListFragment
  * Created by mariusz on 04.02.17.
  */
 @PerActivity
-@Component(modules = arrayOf(NewsModule::class, NetworkModule::class, TwitterDataSourceModule::class),
+@Component(modules = arrayOf(TweetListModule::class, NetworkModule::class, TwitterDataSourceModule::class),
         dependencies = arrayOf(AppComponent::class))
-interface NewsComponent {
+interface TweetListComponent {
 
     fun inject(fragment: TweetListFragment)
 
@@ -26,7 +26,7 @@ interface NewsComponent {
     fun favoritesPresenter(): TweetListContract.Presenter
 
     @NewsPresenterType
-    fun newsPresenter(): TweetListContract.Presenter
+    fun tweetTimelinePresenter(): TweetListContract.Presenter
 
     @UserTimelinePresenterType
     fun userTimelinePresenter(): TweetListContract.Presenter

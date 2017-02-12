@@ -9,20 +9,20 @@ import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.UserTimelinePresenterTyp
 import pl.mbaleczny.rapid_mg.data.TwitterDataSource
 import pl.mbaleczny.rapid_mg.tweetList.TweetListContract
 import pl.mbaleczny.rapid_mg.tweetList.presenter.FavoritesPresenter
-import pl.mbaleczny.rapid_mg.tweetList.presenter.TweetTimelinePresenter
+import pl.mbaleczny.rapid_mg.tweetList.presenter.HomeTimelinePresenter
 import pl.mbaleczny.rapid_mg.tweetList.presenter.UserTimelinePresenter
 
 /**
  * Created by mariusz on 03.02.17.
  */
 @Module
-class NewsModule {
+class TweetListModule {
 
     @Provides
     @PerActivity
     @NewsPresenterType
     fun provideNewsPresenter(twitterDataSource: TwitterDataSource): TweetListContract.Presenter {
-        return TweetTimelinePresenter(twitterDataSource)
+        return HomeTimelinePresenter(twitterDataSource)
     }
 
     @Provides

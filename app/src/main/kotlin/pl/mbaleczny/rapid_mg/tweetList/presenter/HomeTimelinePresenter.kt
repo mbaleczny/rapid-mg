@@ -10,7 +10,7 @@ import pl.mbaleczny.rapid_mg.tweetList.TweetListContract
  * Created by mariusz on 04.02.17.
  */
 
-class TweetTimelinePresenter(twitterDataSource: TwitterDataSource)
+class HomeTimelinePresenter(twitterDataSource: TwitterDataSource)
     : BaseTweetListPresenter(twitterDataSource), TweetListContract.Presenter {
 
     override fun loadNewerTweets() {

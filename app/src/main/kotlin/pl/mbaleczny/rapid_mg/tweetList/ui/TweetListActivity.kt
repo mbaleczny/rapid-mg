@@ -13,9 +13,9 @@ import kotlinx.android.synthetic.main.activity_tweet_list.*
 import pl.mbaleczny.rapid_mg.R
 import pl.mbaleczny.rapid_mg.RapidApp
 import pl.mbaleczny.rapid_mg.dagger.network.NetworkModule
-import pl.mbaleczny.rapid_mg.dagger.tweetList.DaggerNewsComponent
-import pl.mbaleczny.rapid_mg.dagger.tweetList.NewsComponent
-import pl.mbaleczny.rapid_mg.dagger.tweetList.NewsModule
+import pl.mbaleczny.rapid_mg.dagger.tweetList.DaggerTweetListComponent
+import pl.mbaleczny.rapid_mg.dagger.tweetList.TweetListComponent
+import pl.mbaleczny.rapid_mg.dagger.tweetList.TweetListModule
 import pl.mbaleczny.rapid_mg.login.LoginActivity
 import pl.mbaleczny.rapid_mg.tweetList.adapter.TweetListPagerAdapter
 
@@ -23,7 +23,7 @@ import pl.mbaleczny.rapid_mg.tweetList.adapter.TweetListPagerAdapter
 class TweetListActivity : AppCompatActivity() {
 
     companion object {
-        var newsComponent: NewsComponent? = null
+        var tweetListComponent: TweetListComponent? = null
     }
 
     private var pagerAdapter: TweetListPagerAdapter? = null
@@ -71,10 +71,10 @@ class TweetListActivity : AppCompatActivity() {
     }
 
     private fun initNewsComponent() {
-        if (newsComponent == null)
-            newsComponent = DaggerNewsComponent.builder()
+        if (tweetListComponent == null)
+            tweetListComponent = DaggerTweetListComponent.builder()
                     .appComponent(RapidApp.appComponent)
-                    .newsModule(NewsModule())
+                    .tweetListModule(TweetListModule())
                     .networkModule(NetworkModule())
                     .build()
 
@@ -90,8 +90,8 @@ class TweetListActivity : AppCompatActivity() {
 
         val userId = TwitterCore.getInstance().sessionManager.activeSession.userId
 
-        val tweetListFragment = TweetListFragment.newInstance(userId, newsComponent?.newsPresenter()!!)
-        val favoritesFragment = TweetListFragment.newInstance(userId, newsComponent?.favoritesPresenter()!!)
+        val tweetListFragment = TweetListFragment.newInstance(userId, tweetListComponent?.tweetTimelinePresenter()!!)
+        val favoritesFragment = TweetListFragment.newInstance(userId, tweetListComponent?.favoritesPresenter()!!)
 
         addScreen(tweetListFragment)
         addScreen(favoritesFragment)
