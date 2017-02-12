@@ -47,7 +47,6 @@ class TweetListFragment : Fragment(), TweetListContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         userId = arguments?.getLong(USER_ID_ARG)
-        presenter.bindView(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -60,7 +59,11 @@ class TweetListFragment : Fragment(), TweetListContract.View {
         tweetList?.adapter = adapter
 
         swipeRefresh = v?.findViewById(R.id.swipeRefreshLayout) as SwipeRefreshLayout
-        swipeRefresh?.setOnRefreshListener { loadData() }
+        swipeRefresh?.setOnRefreshListener {
+            adapter?.tweets?.clear()
+            presenter.subscribe()
+        }
+        presenter.bindView(this)
 
         return v
     }
