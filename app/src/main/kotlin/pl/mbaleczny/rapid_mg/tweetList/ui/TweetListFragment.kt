@@ -1,5 +1,6 @@
 package pl.mbaleczny.rapid_mg.tweetList.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
@@ -15,6 +16,7 @@ import com.twitter.sdk.android.core.models.Tweet
 import pl.mbaleczny.rapid_mg.R
 import pl.mbaleczny.rapid_mg.tweetList.TweetListContract
 import pl.mbaleczny.rapid_mg.tweetList.adapter.TweetsRecyclerAdapter
+import pl.mbaleczny.rapid_mg.user.UserActivity
 import pl.mbaleczny.rapid_mg.util.USER_ID_ARG
 
 
@@ -97,7 +99,9 @@ class TweetListFragment : Fragment(), TweetListContract.View {
     }
 
     override fun openUserActivity(id: Long) {
-
+        val i = Intent(activity, UserActivity::class.java)
+        i.putExtra(USER_ID_ARG, id)
+        activity.startActivity(i)
     }
 
     fun loadData() {
