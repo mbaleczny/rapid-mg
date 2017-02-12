@@ -24,6 +24,8 @@ interface TweetListContract {
 
         fun loadOlderTweets()
 
+        fun loadFreshList()
+
         override fun onLike(tweet: Tweet)
 
         override fun onUnlike(tweet: Tweet)

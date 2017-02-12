@@ -1,6 +1,5 @@
 package pl.mbaleczny.rapid_mg.tweetList.presenter
 
-import com.twitter.sdk.android.core.models.Tweet
 import io.reactivex.disposables.Disposable
 import pl.mbaleczny.rapid_mg.data.TwitterDataSource
 import pl.mbaleczny.rapid_mg.tweetList.TweetListContract
@@ -23,14 +22,6 @@ class HomeTimelinePresenter(twitterDataSource: TwitterDataSource)
     override fun getTweets(userId: Long?, sinceId: Long?, maxId: Long?): Disposable =
             applyObserver(twitterDataSource.getHomeTimeline(userId, TWEETS_COUNT, sinceId, maxId))
 
-    override fun onLike(tweet: Tweet) {
-        disposables.add(sendLike(tweet))
-    }
-
-    override fun onUnlike(tweet: Tweet) {
-        disposables.add(removeLike(tweet))
-    }
-
     override fun bindView(view: TweetListContract.View) {
         this.view = view
     }
@@ -38,15 +29,5 @@ class HomeTimelinePresenter(twitterDataSource: TwitterDataSource)
     override fun unBind() {
         view = null
         unsubscribe()
-    }
-
-    private fun sendLike(tweet: Tweet): Disposable {
-        return twitterDataSource.favorite(tweet.id)
-                .subscribe({}, { view?.showError(it) })
-    }
-
-    private fun removeLike(tweet: Tweet): Disposable {
-        return twitterDataSource.unFavorite(tweet.id)
-                .subscribe({ }, { view?.showError(it) })
     }
 }

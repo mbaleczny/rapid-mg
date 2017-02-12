@@ -9,6 +9,7 @@ import org.joda.time.DateTimeComparator
 import pl.mbaleczny.rapid_mg.data.TwitterDataSource
 import pl.mbaleczny.rapid_mg.tweetList.TweetListContract
 import pl.mbaleczny.rapid_mg.util.parseDateTime
+import java.util.*
 
 /**
  * Created by mariusz on 09.02.17.
@@ -28,6 +29,14 @@ abstract class BaseTweetListPresenter(val twitterDataSource: TwitterDataSource) 
     var firstId: Long? = null
     var lastId: Long? = null
 
+    private val tweetDateComparator: Comparator<Tweet> =
+            Comparator { o1, o2 ->
+                val dt1 = parseDateTime(o1?.createdAt)
+                val dt2 = parseDateTime(o2?.createdAt)
+                dt1?.isBefore(dt2)
+                -DateTimeComparator.getInstance().compare(dt1, dt2)
+            }
+
     abstract fun getTweets(userId: Long?, sinceId: Long?, maxId: Long?): Disposable
 
     override fun bindView(view: TweetListContract.View) {
@@ -45,13 +54,32 @@ abstract class BaseTweetListPresenter(val twitterDataSource: TwitterDataSource) 
     }
 
     override fun onLike(tweet: Tweet) {
+        disposables.add(sendLike(tweet))
     }
 
     override fun onUnlike(tweet: Tweet) {
+        disposables.add(removeLike(tweet))
     }
 
     override fun showUser(user: User) {
         view?.openUserActivity(user.id)
+    }
+
+    override fun loadFreshList() {
+        tweets.clear()
+        firstId = null
+        lastId = null
+        loadNewerTweets()
+    }
+
+    private fun sendLike(tweet: Tweet): Disposable {
+        return twitterDataSource.favorite(tweet.id)
+                .subscribe({}, { view?.showError(it) })
+    }
+
+    private fun removeLike(tweet: Tweet): Disposable {
+        return twitterDataSource.unFavorite(tweet.id)
+                .subscribe({ }, { view?.showError(it) })
     }
 
     protected fun applyObserver(observable: Observable<List<Tweet>>): Disposable =
@@ -59,12 +87,23 @@ abstract class BaseTweetListPresenter(val twitterDataSource: TwitterDataSource) 
                     .map { it ->
                         tweets.addAll(it)
                         tweets
-                    }.flatMapIterable { it -> it }
-                    .toSortedList { o1, o2 ->
-                        val dt1 = parseDateTime(o1?.createdAt)
-                        val dt2 = parseDateTime(o2?.createdAt)
-                        dt1?.isBefore(dt2)
-                        -DateTimeComparator.getInstance().compare(dt1, dt2)
-                    }.subscribe({ t -> view?.setTweets(t) },
-                    { t -> view?.showError(t) })
+                    }
+                    .flatMapIterable { it -> it }
+                    .distinct { it.id }
+                    .toSortedList(tweetDateComparator)
+                    .subscribe({ onNext(it) }, { onError(it) })
+
+    private fun onNext(data: List<Tweet>) {
+        if (data.isNotEmpty()) {
+            firstId = data.first().id
+            lastId = data.last().id
+            view?.setTweets(data)
+        }
+        view?.hideProgress()
+    }
+
+    private fun onError(t: Throwable) {
+        view?.showError(t)
+        view?.hideProgress()
+    }
 }
