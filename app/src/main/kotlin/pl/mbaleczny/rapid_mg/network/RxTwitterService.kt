@@ -33,11 +33,13 @@ interface RxTwitterService {
              @Query("include_entities") includeEntities: Boolean = true): Observable<User>
 
     @FormUrlEncoded
-    @POST("/1.1/favorites/destroy.json?")
-    fun unFavorite(@Field("id") id: Long?): Observable<Tweet>
+    @POST("/1.1/favorites/destroy.json")
+    fun unFavorite(@Field("id") id: Long?,
+                   @Field("include_entities") includeEntities: Boolean = false): Observable<Tweet>
 
     @FormUrlEncoded
-    @POST("/1.1/favorites/create.json?")
-    fun favorite(@Field("id") id: Long?): Observable<Tweet>
+    @POST("/1.1/favorites/create.json")
+    fun favorite(@Field("id") id: Long?,
+                 @Field("include_entities") includeEntities: Boolean = false): Observable<Tweet>
 
 }

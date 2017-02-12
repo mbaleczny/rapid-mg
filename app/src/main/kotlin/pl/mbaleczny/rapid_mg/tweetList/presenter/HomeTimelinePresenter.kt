@@ -1,7 +1,6 @@
 package pl.mbaleczny.rapid_mg.tweetList.presenter
 
 import com.twitter.sdk.android.core.models.Tweet
-import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import pl.mbaleczny.rapid_mg.data.TwitterDataSource
 import pl.mbaleczny.rapid_mg.tweetList.TweetListContract
@@ -42,12 +41,12 @@ class HomeTimelinePresenter(twitterDataSource: TwitterDataSource)
     }
 
     private fun sendLike(tweet: Tweet): Disposable {
-        return Observable.fromCallable { twitterDataSource.favorite(tweet.id) }
-                .subscribe({ }, { view?.showError(it) })
+        return twitterDataSource.favorite(tweet.id)
+                .subscribe({}, { view?.showError(it) })
     }
 
     private fun removeLike(tweet: Tweet): Disposable {
-        return Observable.fromCallable { twitterDataSource.unFavorite(tweet.id) }
+        return twitterDataSource.unFavorite(tweet.id)
                 .subscribe({ }, { view?.showError(it) })
     }
 }
