@@ -7,6 +7,7 @@ import pl.mbaleczny.rapid_mg.dagger.network.NetworkModule
 import pl.mbaleczny.rapid_mg.dagger.scope.PerActivity
 import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.FavoritesPresenterType
 import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.NewsPresenterType
+import pl.mbaleczny.rapid_mg.data.TwitterDataSource
 import pl.mbaleczny.rapid_mg.tweetList.TweetListContract
 import pl.mbaleczny.rapid_mg.tweetList.ui.TweetListFragment
 
@@ -25,5 +26,7 @@ interface NewsComponent {
 
     @NewsPresenterType
     fun newsPresenter(): TweetListContract.Presenter
+
+    fun twitterDataSource(): TwitterDataSource
 
 }

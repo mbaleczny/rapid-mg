@@ -33,6 +33,10 @@
             android:name=".tweetList.ui.TweetListActivity"
             android:theme="@style/AppTheme" />
 
+        <activity
+            android:name=".user.UserActivity"
+            android:theme="@style/AppTheme" />
+
     </application>
 
 </manifest>
