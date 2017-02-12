@@ -20,4 +20,6 @@
     <dimen name="tw_user_panel_bottom_margin">10dp</dimen>
 
     <dimen name="user_panel_avatar_margin">20dp</dimen>
+    <dimen name="user_panel_avatar_margin_top">90dp</dimen>
+    <dimen name="user_panel_banner_height">120dp</dimen>
 </resources>

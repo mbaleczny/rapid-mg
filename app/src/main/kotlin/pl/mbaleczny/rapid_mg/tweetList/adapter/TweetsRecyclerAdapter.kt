@@ -25,7 +25,7 @@ class TweetsRecyclerAdapter(val context: Context) : RecyclerView.Adapter<TweetsR
         this.listener = listener
     }
 
-    private val tweets = mutableListOf<Tweet>()
+    val tweets = mutableListOf<Tweet>()
     private val inflater = LayoutInflater.from(context)
 
     var listener: onTweetAction? = null
@@ -67,6 +67,8 @@ class TweetsRecyclerAdapter(val context: Context) : RecyclerView.Adapter<TweetsR
                     .noPlaceholder()
                     .error(R.drawable.tw__ic_tweet_photo_error_light)
                     .into(avatar)
+
+            avatar.setOnClickListener { listener?.showUser(tweet.user) }
 
             fullName.text = tweet.user.name
             screen_name.text = "@" + tweet.user.screenName
