@@ -6,7 +6,7 @@ import pl.mbaleczny.rapid_mg.data.TwitterDataSource
 /**
  * Created by mariusz on 09.02.17.
  */
-class FavoritesPresenter(twitterDataSource: TwitterDataSource)
+class UserTimelinePresenter(twitterDataSource: TwitterDataSource)
     : BaseTweetListPresenter(twitterDataSource) {
 
     override fun loadNewerTweets() {
@@ -18,6 +18,6 @@ class FavoritesPresenter(twitterDataSource: TwitterDataSource)
     }
 
     override fun getTweets(userId: Long?, sinceId: Long?, maxId: Long?): Disposable =
-            applyObserver(twitterDataSource.favorites(userId, TWEETS_COUNT, sinceId, maxId))
+            applyObserver(twitterDataSource.getUserTimeline(userId, TWEETS_COUNT, sinceId, maxId))
 
 }

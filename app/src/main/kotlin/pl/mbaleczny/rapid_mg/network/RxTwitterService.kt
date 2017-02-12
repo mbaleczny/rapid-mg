@@ -12,11 +12,21 @@ interface RxTwitterService {
 
     @GET("/1.1/statuses/user_timeline.json")
     fun userTimeline(@Query("user_id") userId: Long?,
-                     @Query("count") count: Int?): Observable<List<Tweet>>
+                     @Query("count") count: Int?,
+                     @Query("since_id") sinceId: Long?,
+                     @Query("max_id") maxId: Long?): Observable<List<Tweet>>
+
+    @GET("/1.1/statuses/home_timeline.json")
+    fun homeTimeline(@Query("user_id") userId: Long?,
+                     @Query("count") count: Int?,
+                     @Query("since_id") sinceId: Long?,
+                     @Query("max_id") maxId: Long?): Observable<List<Tweet>>
 
     @GET("/1.1/favorites/list.json")
     fun favorites(@Query("user_id") userId: Long?,
-                  @Query("count") count: Int?): Observable<List<Tweet>>
+                  @Query("count") count: Int?,
+                  @Query("since_id") sinceId: Long?,
+                  @Query("max_id") maxId: Long?): Observable<List<Tweet>>
 
     @GET("/1.1/users/show.json")
     fun user(@Query("user_id") userId: Long?,

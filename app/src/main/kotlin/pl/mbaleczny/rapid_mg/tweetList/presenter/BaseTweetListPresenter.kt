@@ -20,7 +20,11 @@ abstract class BaseTweetListPresenter(val twitterDataSource: TwitterDataSource) 
     protected var view: TweetListContract.View? = null
     protected val disposables = CompositeDisposable()
 
-    abstract fun getTweets(userId: Long?): Disposable
+    var userId: Long? = null
+    var firstId: Long? = null
+    var lastId: Long? = null
+
+    abstract fun getTweets(userId: Long?, sinceId: Long?, maxId: Long?): Disposable
 
     override fun bindView(view: TweetListContract.View) {
         this.view = view
@@ -34,10 +38,6 @@ abstract class BaseTweetListPresenter(val twitterDataSource: TwitterDataSource) 
     override fun unsubscribe() {
         disposables.clear()
         view?.hideProgress()
-    }
-
-    override fun subscribe(userId: Long?) {
-        disposables.add(getTweets(userId))
     }
 
     override fun onLike(tweet: Tweet) {

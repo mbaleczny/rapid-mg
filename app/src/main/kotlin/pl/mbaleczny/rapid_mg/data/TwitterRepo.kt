@@ -39,34 +39,26 @@ class TwitterRepo : TwitterDataSource {
         computation = scheduler
     }
 
-    override fun getUserTimeline(userId: Long?, count: Int?): Observable<List<Tweet>> {
-        return rxTwitterService.userTimeline(userId, count)
-                .subscribeOn(io)
-                .observeOn(ui)
-    }
+    override fun getUserTimeline(userId: Long?, count: Int?, sinceId: Long?, maxId: Long?): Observable<List<Tweet>>
+            = compose(rxTwitterService.userTimeline(userId, count, sinceId, maxId))
 
-    override fun favorites(userId: Long?, count: Int?): Observable<List<Tweet>> {
-        return rxTwitterService.favorites(userId, count)
-                .subscribeOn(io)
-                .observeOn(ui)
-    }
+    override fun getHomeTimeline(userId: Long?, count: Int?, sinceId: Long?, maxId: Long?): Observable<List<Tweet>>
+            = compose(rxTwitterService.homeTimeline(userId, count, sinceId, maxId))
 
-    override fun favorite(id: Long?): Observable<Tweet> {
-        return rxTwitterService.favorite(id)
-                .subscribeOn(io)
-                .observeOn(ui)
-    }
+    override fun favorites(userId: Long?, count: Int?, sinceId: Long?, maxId: Long?): Observable<List<Tweet>>
+            = compose(rxTwitterService.favorites(userId, count, sinceId, maxId))
 
-    override fun unFavorite(id: Long?): Observable<Tweet> {
-        return rxTwitterService.unFavorite(id)
-                .subscribeOn(io)
-                .observeOn(ui)
-    }
+    override fun favorite(id: Long?): Observable<Tweet>
+            = compose(rxTwitterService.favorite(id))
 
-    override fun getUser(userId: Long?, includeEntities: Boolean): Observable<User> {
-        return rxTwitterService.user(userId, includeEntities)
-                .subscribeOn(io)
-                .observeOn(ui)
+    override fun unFavorite(id: Long?): Observable<Tweet>
+            = compose(rxTwitterService.unFavorite(id))
+
+    override fun getUser(userId: Long?, includeEntities: Boolean): Observable<User>
+            = compose(rxTwitterService.user(userId, includeEntities))
+
+    private fun <T> compose(obs: Observable<T>): Observable<T> {
+        return obs.subscribeOn(io).observeOn(ui)
     }
 
 }

@@ -13,12 +13,16 @@ import pl.mbaleczny.rapid_mg.tweetList.TweetListContract
 class TweetTimelinePresenter(twitterDataSource: TwitterDataSource)
     : BaseTweetListPresenter(twitterDataSource), TweetListContract.Presenter {
 
-    override fun subscribe(userId: Long?) {
-        disposables.add(getTweets(userId))
+    override fun loadNewerTweets() {
+        disposables.add(getTweets(userId, firstId, null))
     }
 
-    override fun getTweets(userId: Long?): Disposable =
-            applyObserver(twitterDataSource.getUserTimeline(userId, TWEETS_COUNT))
+    override fun loadOlderTweets() {
+        disposables.add(getTweets(userId, null, lastId))
+    }
+
+    override fun getTweets(userId: Long?, sinceId: Long?, maxId: Long?): Disposable =
+            applyObserver(twitterDataSource.getHomeTimeline(userId, TWEETS_COUNT, sinceId, maxId))
 
     override fun onLike(tweet: Tweet) {
         disposables.add(sendLike(tweet))

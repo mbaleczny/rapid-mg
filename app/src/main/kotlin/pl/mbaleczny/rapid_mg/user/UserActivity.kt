@@ -110,7 +110,7 @@ class UserActivity : AppCompatActivity(), UserContract.View {
     }
 
     private fun addTweetListTabs(userId: Long) {
-        val tweetListFragment = TweetListFragment.newInstance(userId, TweetListActivity.newsComponent?.newsPresenter()!!)
+        val tweetListFragment = TweetListFragment.newInstance(userId, TweetListActivity.newsComponent?.userTimelinePresenter()!!)
         val favoritesFragment = TweetListFragment.newInstance(userId, TweetListActivity.newsComponent?.favoritesPresenter()!!)
 
         addScreen(tweetListFragment)

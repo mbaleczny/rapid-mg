@@ -20,7 +20,9 @@ interface TweetListContract {
     }
 
     interface Presenter : BasePresenter<View>, TweetsRecyclerAdapter.onTweetAction {
-        fun subscribe(userId: Long?)
+        fun loadNewerTweets()
+
+        fun loadOlderTweets()
 
         override fun onLike(tweet: Tweet)
 

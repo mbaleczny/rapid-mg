@@ -31,15 +31,18 @@ class NewsPresenterTypeTest {
         presenter = TweetTimelinePresenter(TwitterRepo(twitterService, scheduler))
         presenter.bindView(view)
 
-        whenever(twitterService.userTimeline(eq(1), any()))
+        whenever(twitterService.homeTimeline(eq(1), any(), anyOrNull(), anyOrNull()))
                 .thenReturn(Observable.just(tweets))
-        whenever(twitterService.userTimeline(eq(0), any()))
+        whenever(twitterService.homeTimeline(eq(0), any(), anyOrNull(), anyOrNull()))
                 .doReturn(Observable.error(TwitterException("error")))
     }
 
     @Test
     fun getTweets_isCorrect() {
-        presenter.subscribe(1)
+        presenter.userId = 1
+        presenter.firstId = 0
+
+        presenter.loadNewerTweets()
         scheduler.triggerActions()
 
         verify(view).setTweets(any())
@@ -47,7 +50,9 @@ class NewsPresenterTypeTest {
 
     @Test
     fun getTweets_failed() {
-        presenter.subscribe(0)
+        presenter.userId = 0
+
+        presenter.loadNewerTweets()
         scheduler.triggerActions()
 
         verify(view).showError(Mockito.any(TwitterException::class.java))

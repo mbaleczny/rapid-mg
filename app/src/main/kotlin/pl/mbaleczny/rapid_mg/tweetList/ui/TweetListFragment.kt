@@ -77,7 +77,7 @@ class TweetListFragment : Fragment(), TweetListContract.View {
 
     override fun onResume() {
         super.onResume()
-        loadData()
+        presenter.loadNewerTweets()
     }
 
     override fun showError(e: Throwable?) {
@@ -102,9 +102,5 @@ class TweetListFragment : Fragment(), TweetListContract.View {
         val i = Intent(activity, UserActivity::class.java)
         i.putExtra(USER_ID_ARG, id)
         activity.startActivity(i)
-    }
-
-    fun loadData() {
-        presenter.subscribe(userId)
     }
 }

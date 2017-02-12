@@ -9,9 +9,11 @@ import io.reactivex.Observable
  */
 interface TwitterDataSource {
 
-    fun getUserTimeline(userId: Long?, count: Int?): Observable<List<Tweet>>
+    fun getUserTimeline(userId: Long?, count: Int?, sinceId: Long?, maxId: Long?): Observable<List<Tweet>>
 
-    fun favorites(userId: Long?, count: Int?): Observable<List<Tweet>>
+    fun getHomeTimeline(userId: Long?, count: Int?, sinceId: Long?, maxId: Long?): Observable<List<Tweet>>
+
+    fun favorites(userId: Long?, count: Int?, sinceId: Long?, maxId: Long?): Observable<List<Tweet>>
 
     fun favorite(id: Long?): Observable<Tweet>
 
