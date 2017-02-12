@@ -21,7 +21,29 @@ fun transformTweetDateTime(input: String): String {
         val dateTime = DateTime.parse(input, formatter.withLocale(Locale.UK))
         return DateTimeFormat.forPattern(output_date_time_formatter_pattern).print(dateTime)
     } catch (e: IllegalArgumentException) {
-        Log.e(TAG, e.message, e)
-        return input
+        when (e) {
+            is IllegalArgumentException,
+            is UnsupportedOperationException -> {
+                Log.e(TAG, e.message, e)
+                return input
+            }
+            else -> throw e
+        }
+    }
+}
+
+fun parseDateTime(input: String?): DateTime? {
+    if (input.isNullOrEmpty()) return null
+    try {
+        return DateTime.parse(input, formatter.withLocale(Locale.UK))
+    } catch (e: Exception) {
+        when (e) {
+            is IllegalArgumentException,
+            is UnsupportedOperationException -> {
+                Log.e(TAG, e.message, e)
+                return null
+            }
+            else -> throw e
+        }
     }
 }
