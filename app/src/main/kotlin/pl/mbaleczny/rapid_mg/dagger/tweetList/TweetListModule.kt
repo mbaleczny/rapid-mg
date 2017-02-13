@@ -26,14 +26,12 @@ class TweetListModule {
     }
 
     @Provides
-    @PerActivity
     @FavoritesPresenterType
     fun provideFavoritesPresenter(twitterDataSource: TwitterDataSource): TweetListContract.Presenter {
         return FavoritesPresenter(twitterDataSource)
     }
 
     @Provides
-    @PerActivity
     @UserTimelinePresenterType
     fun provideUserTimelinePresenter(twitterDataSource: TwitterDataSource): TweetListContract.Presenter {
         return UserTimelinePresenter(twitterDataSource)
