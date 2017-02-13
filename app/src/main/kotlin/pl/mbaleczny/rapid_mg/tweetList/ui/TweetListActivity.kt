@@ -43,6 +43,11 @@ class TweetListActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        viewPager.clearOnPageChangeListeners()
+    }
+
     private fun setupActionBar() {
         val ab: ActionBar? = supportActionBar
         ab?.setHomeButtonEnabled(false)
@@ -68,6 +73,7 @@ class TweetListActivity : AppCompatActivity() {
         pagerAdapter = TweetListPagerAdapter(supportFragmentManager)
         viewPager.adapter = pagerAdapter
         tabLayout.setupWithViewPager(viewPager)
+        viewPager.addOnPageChangeListener(pageChangeListener)
     }
 
     private fun initNewsComponent() {
@@ -77,7 +83,6 @@ class TweetListActivity : AppCompatActivity() {
                     .tweetListModule(TweetListModule())
                     .networkModule(NetworkModule())
                     .build()
-
     }
 
     private fun initToolbar() {
@@ -90,8 +95,10 @@ class TweetListActivity : AppCompatActivity() {
 
         val userId = TwitterCore.getInstance().sessionManager.activeSession.userId
 
-        val tweetListFragment = TweetListFragment.newInstance(userId, tweetListComponent?.tweetTimelinePresenter()!!)
-        val favoritesFragment = TweetListFragment.newInstance(userId, tweetListComponent?.favoritesPresenter()!!)
+        val tweetListFragment = TweetListFragment.newInstance(userId,
+                tweetListComponent?.tweetTimelinePresenter()!!)
+        val favoritesFragment = TweetListFragment.newInstance(userId,
+                tweetListComponent?.favoritesPresenter()!!)
 
         addScreen(tweetListFragment)
         addScreen(favoritesFragment)
@@ -104,4 +111,21 @@ class TweetListActivity : AppCompatActivity() {
         val pos = pagerAdapter?.count ?: 0
         pagerAdapter?.addFragment(pos, fragment)
     }
+
+    private val pageChangeListener: ViewPager.OnPageChangeListener =
+            object : ViewPager.OnPageChangeListener {
+                var oldPosition = 0
+                override fun onPageScrollStateChanged(state: Int) {
+                }
+
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                }
+
+                override fun onPageSelected(position: Int) {
+                    pagerAdapter?.fragments?.get(position)?.onResume()
+                    pagerAdapter?.fragments?.get(oldPosition)?.onPause()
+
+                    oldPosition = position
+                }
+            }
 }

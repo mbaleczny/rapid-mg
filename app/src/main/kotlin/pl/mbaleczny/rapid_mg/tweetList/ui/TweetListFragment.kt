@@ -60,18 +60,21 @@ class TweetListFragment : Fragment(), TweetListContract.View {
         swipeRefresh = v?.findViewById(R.id.swipeRefreshLayout) as SwipeRefreshLayout
         swipeRefresh?.setOnRefreshListener { presenter.loadFreshList() }
 
+        presenter.bindView(this)
+        presenter.loadFreshList()
+
         return v
     }
 
     override fun onResume() {
         super.onResume()
         presenter.bindView(this)
-        presenter.loadFreshList()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         presenter.unBind()
+        hideProgress()
     }
 
     override fun setTweets(data: List<Tweet>?) {
@@ -80,7 +83,7 @@ class TweetListFragment : Fragment(), TweetListContract.View {
 
     override fun showError(e: Throwable?) {
         Log.e(javaClass.simpleName, e?.message)
-        Toast.makeText(context, e?.message, Toast.LENGTH_SHORT).show()
+        showMessage(e?.message as String)
     }
 
     override fun hideProgress() {
