@@ -16,8 +16,7 @@
         style="@style/FullNameText"
         android:layout_alignTop="@+id/tweet_vh_avatar"
         android:layout_toEndOf="@+id/tweet_vh_avatar"
-        android:layout_toRightOf="@+id/tweet_vh_avatar"
-        android:text="Mariusz B" />
+        android:layout_toRightOf="@+id/tweet_vh_avatar" />
 
     <TextView
         android:id="@+id/tweet_vh_screen_name"
@@ -25,8 +24,7 @@
         android:layout_alignBottom="@id/tweet_vh_avatar"
         android:layout_below="@id/tweet_vh_full_name"
         android:layout_toEndOf="@id/tweet_vh_avatar"
-        android:layout_toRightOf="@id/tweet_vh_avatar"
-        android:text="\@mariuszbaleczny" />
+        android:layout_toRightOf="@id/tweet_vh_avatar" />
 
     <TextView
         android:id="@+id/tweet_vh_timestamp"
@@ -34,14 +32,12 @@
         android:layout_alignBottom="@id/tweet_vh_avatar"
         android:layout_below="@id/tweet_vh_full_name"
         android:layout_toEndOf="@id/tweet_vh_screen_name"
-        android:layout_toRightOf="@id/tweet_vh_screen_name"
-        android:text="• 13/02/2017" />
+        android:layout_toRightOf="@id/tweet_vh_screen_name" />
 
     <TextView
         android:id="@+id/tweet_vh_text"
         style="@style/TweetText"
         android:layout_below="@id/tweet_vh_avatar"
-        android:text="Just chilln bro"
         android:textSize="@dimen/tw_text_size_large" />
 
     <com.twitter.sdk.android.tweetui.ToggleImageButton
