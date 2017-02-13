@@ -12,6 +12,7 @@ import pl.mbaleczny.rapid_mg.data.TwitterRepo
 import pl.mbaleczny.rapid_mg.network.RxTwitterService
 import pl.mbaleczny.rapid_mg.tweetList.TweetListContract
 import pl.mbaleczny.rapid_mg.tweetList.presenter.HomeTimelinePresenter
+import java.util.*
 
 /**
  * Created by mariusz on 08.02.17.
@@ -22,7 +23,7 @@ class HomeTimelinePresenterTest {
 
     private var twitterService: RxTwitterService = mock()
     private var view: TweetListContract.View = mock()
-    private val tweets: List<Tweet> = arrayListOf(mock(), mock())
+    private val tweets: MutableList<Tweet> = ArrayList()
     private val scheduler: TestScheduler = TestScheduler()
 
     @Before
@@ -39,18 +40,18 @@ class HomeTimelinePresenterTest {
 
     @Test
     fun getTweets_isCorrect() {
-        presenter.userId = 1
+        presenter._userId = 1
         presenter.firstId = 0
 
         presenter.loadNewerTweets()
         scheduler.triggerActions()
 
-        verify(view).setTweets(any())
+        verify(view).setTweets(eq(tweets))
     }
 
     @Test
     fun getTweets_failed() {
-        presenter.userId = 0
+        presenter._userId = 0
 
         presenter.loadNewerTweets()
         scheduler.triggerActions()

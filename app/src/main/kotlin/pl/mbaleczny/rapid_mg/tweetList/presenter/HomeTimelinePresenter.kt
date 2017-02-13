@@ -12,11 +12,11 @@ class HomeTimelinePresenter(twitterDataSource: TwitterDataSource)
     : BaseTweetListPresenter(twitterDataSource), TweetListContract.Presenter {
 
     override fun loadNewerTweets() {
-        disposables.add(getTweets(userId, firstId, null))
+        disposables.add(getTweets(_userId, firstId, null))
     }
 
     override fun loadOlderTweets() {
-        disposables.add(getTweets(userId, null, lastId))
+        disposables.add(getTweets(_userId, null, lastId))
     }
 
     override fun getTweets(userId: Long?, sinceId: Long?, maxId: Long?): Disposable =

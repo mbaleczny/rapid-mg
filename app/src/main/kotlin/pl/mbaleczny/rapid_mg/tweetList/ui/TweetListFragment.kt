@@ -38,8 +38,6 @@ class TweetListFragment : Fragment(), TweetListContract.View {
 
     lateinit var presenter: TweetListContract.Presenter
 
-    private var userId: Long? = null
-
     private var tweetList: RecyclerView? = null
     private var emptyLabel: TextView? = null
     private var swipeRefresh: SwipeRefreshLayout? = null
@@ -48,7 +46,7 @@ class TweetListFragment : Fragment(), TweetListContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        userId = arguments?.getLong(USER_ID_ARG)
+        presenter.setUserId(arguments?.getLong(USER_ID_ARG))
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {

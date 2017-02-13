@@ -26,6 +26,8 @@ interface TweetListContract {
 
         fun loadFreshList()
 
+        fun setUserId(userId: Long?)
+
         override fun onLike(tweet: Tweet)
 
         override fun onUnlike(tweet: Tweet)

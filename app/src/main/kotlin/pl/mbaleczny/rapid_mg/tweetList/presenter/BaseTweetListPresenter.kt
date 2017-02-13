@@ -25,7 +25,7 @@ abstract class BaseTweetListPresenter(val twitterDataSource: TwitterDataSource) 
 
     protected val tweets: MutableList<Tweet> = arrayListOf()
 
-    var userId: Long? = null
+    var _userId: Long? = null
     var firstId: Long? = null
     var lastId: Long? = null
 
@@ -37,7 +37,7 @@ abstract class BaseTweetListPresenter(val twitterDataSource: TwitterDataSource) 
                 -DateTimeComparator.getInstance().compare(dt1, dt2)
             }
 
-    abstract fun getTweets(userId: Long?, sinceId: Long?, maxId: Long?): Disposable
+    abstract fun getTweets(_userId: Long?, sinceId: Long?, maxId: Long?): Disposable
 
     override fun bindView(view: TweetListContract.View) {
         this.view = view
@@ -46,6 +46,10 @@ abstract class BaseTweetListPresenter(val twitterDataSource: TwitterDataSource) 
     override fun unBind() {
         view = null
         unsubscribe()
+    }
+
+    override fun setUserId(userId: Long?) {
+        _userId = userId
     }
 
     override fun unsubscribe() {
