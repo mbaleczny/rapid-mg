@@ -35,7 +35,7 @@ class CustomTwitterApiClient(session: TwitterSession) : TwitterApiClient(session
 
     private fun buildHttpClient(session: TwitterSession): OkHttpClient {
         val loggingInterceptor: HttpLoggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BASIC
         return getOkHttpClientBuilder(session,
                 TwitterCore.getInstance().authConfig,
                 TwitterCore.getInstance().sslSocketFactory)
