@@ -10,8 +10,8 @@ import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.RemoteTwitterDataSource
 import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.TwitterRepoDataSource
 import pl.mbaleczny.rapid_mg.data.TwitterDataSource
 import pl.mbaleczny.rapid_mg.data.TwitterRepo
-import pl.mbaleczny.rapid_mg.data.source.TwitterLocalDataSource
-import pl.mbaleczny.rapid_mg.data.source.TwitterRemoteDataSource
+import pl.mbaleczny.rapid_mg.data.source.local.TwitterLocalDataSource
+import pl.mbaleczny.rapid_mg.data.source.remote.TwitterRemoteDataSource
 import pl.mbaleczny.rapid_mg.network.RxTwitterService
 import pl.mbaleczny.rapid_mg.util.schedulers.BaseSchedulerProvider
 

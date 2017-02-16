@@ -1,4 +1,4 @@
-package pl.mbaleczny.rapid_mg.data.source
+package pl.mbaleczny.rapid_mg.data.source.remote
 
 import com.twitter.sdk.android.core.models.Tweet
 import com.twitter.sdk.android.core.models.User

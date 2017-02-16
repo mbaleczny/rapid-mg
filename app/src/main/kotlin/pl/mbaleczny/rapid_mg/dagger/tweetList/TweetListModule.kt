@@ -5,6 +5,7 @@ import dagger.Provides
 import pl.mbaleczny.rapid_mg.dagger.scope.PerActivity
 import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.FavoritesPresenterType
 import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.NewsPresenterType
+import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.TwitterRepoDataSource
 import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.UserTimelinePresenterType
 import pl.mbaleczny.rapid_mg.data.TwitterDataSource
 import pl.mbaleczny.rapid_mg.tweetList.TweetListContract
@@ -21,20 +22,20 @@ class TweetListModule {
     @Provides
     @PerActivity
     @NewsPresenterType
-    fun provideNewsPresenter(twitterDataSource: TwitterDataSource): TweetListContract.Presenter {
-        return HomeTimelinePresenter(twitterDataSource)
-    }
+    fun provideNewsPresenter(@TwitterRepoDataSource twitterDataSource: TwitterDataSource)
+            : TweetListContract.Presenter
+            = HomeTimelinePresenter(twitterDataSource)
 
     @Provides
     @FavoritesPresenterType
-    fun provideFavoritesPresenter(twitterDataSource: TwitterDataSource): TweetListContract.Presenter {
-        return FavoritesPresenter(twitterDataSource)
-    }
+    fun provideFavoritesPresenter(@TwitterRepoDataSource twitterDataSource: TwitterDataSource)
+            : TweetListContract.Presenter
+            = FavoritesPresenter(twitterDataSource)
 
     @Provides
     @UserTimelinePresenterType
-    fun provideUserTimelinePresenter(twitterDataSource: TwitterDataSource): TweetListContract.Presenter {
-        return UserTimelinePresenter(twitterDataSource)
-    }
+    fun provideUserTimelinePresenter(@TwitterRepoDataSource twitterDataSource: TwitterDataSource)
+            : TweetListContract.Presenter
+            = UserTimelinePresenter(twitterDataSource)
 
 }

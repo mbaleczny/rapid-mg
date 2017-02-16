@@ -1,4 +1,4 @@
-package pl.mbaleczny.rapid_mg.data.source
+package pl.mbaleczny.rapid_mg.data.source.local
 
 import android.content.ContentValues
 import android.content.Context

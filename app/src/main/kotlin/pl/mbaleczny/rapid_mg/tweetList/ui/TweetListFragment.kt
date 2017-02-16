@@ -82,8 +82,8 @@ class TweetListFragment : Fragment(), TweetListContract.View {
     }
 
     override fun showError(e: Throwable?) {
-        Log.e(javaClass.simpleName, e?.message)
-        showMessage(e?.message as String)
+        Log.e(javaClass.simpleName, e?.message ?: "Error occurred")
+        showMessage(e?.message ?: "Error occurred")
     }
 
     override fun hideProgress() {

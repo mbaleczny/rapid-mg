@@ -7,6 +7,7 @@ import pl.mbaleczny.rapid_mg.dagger.network.NetworkModule
 import pl.mbaleczny.rapid_mg.dagger.scope.PerActivity
 import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.FavoritesPresenterType
 import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.NewsPresenterType
+import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.TwitterRepoDataSource
 import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.UserTimelinePresenterType
 import pl.mbaleczny.rapid_mg.data.TwitterDataSource
 import pl.mbaleczny.rapid_mg.tweetList.TweetListContract
@@ -22,15 +23,12 @@ interface TweetListComponent {
 
     fun inject(fragment: TweetListFragment)
 
-    @FavoritesPresenterType
-    fun favoritesPresenter(): TweetListContract.Presenter
+    @FavoritesPresenterType fun favoritesPresenter(): TweetListContract.Presenter
 
-    @NewsPresenterType
-    fun tweetTimelinePresenter(): TweetListContract.Presenter
+    @NewsPresenterType fun tweetTimelinePresenter(): TweetListContract.Presenter
 
-    @UserTimelinePresenterType
-    fun userTimelinePresenter(): TweetListContract.Presenter
+    @UserTimelinePresenterType fun userTimelinePresenter(): TweetListContract.Presenter
 
-    fun twitterDataSource(): TwitterDataSource
+    @TwitterRepoDataSource fun twitterDataSource(): TwitterDataSource
 
 }
