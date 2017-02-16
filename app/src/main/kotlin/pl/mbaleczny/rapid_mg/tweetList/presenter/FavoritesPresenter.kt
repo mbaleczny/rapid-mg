@@ -17,7 +17,7 @@ class FavoritesPresenter(twitterDataSource: TwitterDataSource)
         disposables.add(getTweets(_userId, null, lastId))
     }
 
-    override fun getTweets(userId: Long?, sinceId: Long?, maxId: Long?): Disposable =
-            applyObserver(twitterDataSource.favorites(userId, TWEETS_COUNT, sinceId, maxId))
+    override fun getTweets(_userId: Long?, sinceId: Long?, maxId: Long?): Disposable =
+            applyObserver(dataSource.favorites(_userId, TWEETS_COUNT, sinceId, maxId))
 
 }

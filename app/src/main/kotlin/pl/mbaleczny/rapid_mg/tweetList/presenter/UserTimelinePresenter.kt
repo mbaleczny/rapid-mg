@@ -17,7 +17,7 @@ class UserTimelinePresenter(twitterDataSource: TwitterDataSource)
         disposables.add(getTweets(_userId, null, lastId))
     }
 
-    override fun getTweets(userId: Long?, sinceId: Long?, maxId: Long?): Disposable =
-            applyObserver(twitterDataSource.getUserTimeline(userId, TWEETS_COUNT, sinceId, maxId))
+    override fun getTweets(_userId: Long?, sinceId: Long?, maxId: Long?): Disposable =
+            applyObserver(dataSource.getUserTimeline(_userId, TWEETS_COUNT, sinceId, maxId))
 
 }

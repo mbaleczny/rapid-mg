@@ -19,8 +19,8 @@ class HomeTimelinePresenter(twitterDataSource: TwitterDataSource)
         disposables.add(getTweets(_userId, null, lastId))
     }
 
-    override fun getTweets(userId: Long?, sinceId: Long?, maxId: Long?): Disposable =
-            applyObserver(twitterDataSource.getHomeTimeline(userId, TWEETS_COUNT, sinceId, maxId))
+    override fun getTweets(_userId: Long?, sinceId: Long?, maxId: Long?): Disposable =
+            applyObserver(dataSource.getHomeTimeline(_userId, TWEETS_COUNT, sinceId, maxId))
 
     override fun bindView(view: TweetListContract.View) {
         this.view = view

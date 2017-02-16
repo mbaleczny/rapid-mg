@@ -14,22 +14,22 @@ import java.util.*
 /**
  * Created by mariusz on 09.02.17.
  */
-abstract class BaseTweetListPresenter(val twitterDataSource: TwitterDataSource) : TweetListContract.Presenter {
+abstract class BaseTweetListPresenter(val dataSource: TwitterDataSource)
+    : TweetListContract.Presenter {
 
     companion object {
         val TWEETS_COUNT = 20
     }
 
-    protected var view: TweetListContract.View? = null
-    protected val disposables = CompositeDisposable()
-
-    protected val tweets: MutableList<Tweet> = arrayListOf()
-
     var _userId: Long? = null
     var firstId: Long? = null
     var lastId: Long? = null
 
-    private val tweetDateComparator: Comparator<Tweet> =
+    protected var view: TweetListContract.View? = null
+    protected val tweets: MutableList<Tweet> = arrayListOf()
+    protected val disposables = CompositeDisposable()
+
+    private val tweetDateTimeComparator: Comparator<Tweet> =
             Comparator { o1, o2 ->
                 val dt1 = parseDateTime(o1?.createdAt)
                 val dt2 = parseDateTime(o2?.createdAt)
@@ -76,25 +76,20 @@ abstract class BaseTweetListPresenter(val twitterDataSource: TwitterDataSource) 
         loadNewerTweets()
     }
 
-    private fun sendLike(tweet: Tweet): Disposable {
-        return twitterDataSource.favorite(tweet.id)
-                .subscribe({}, { view?.showError(it) })
-    }
+    private fun sendLike(tweet: Tweet): Disposable =
+            dataSource.favorite(_userId, tweet)
+                    .subscribe({}, { view?.showError(it) })
 
-    private fun removeLike(tweet: Tweet): Disposable {
-        return twitterDataSource.unFavorite(tweet.id)
-                .subscribe({ }, { view?.showError(it) })
-    }
+    private fun removeLike(tweet: Tweet): Disposable =
+            dataSource.unFavorite(_userId, tweet)
+                    .subscribe({ }, { view?.showError(it) })
 
     protected fun applyObserver(observable: Observable<List<Tweet>>): Disposable =
-            observable
-                    .map { it ->
-                        tweets.addAll(it)
-                        tweets
-                    }
+            Observable.concat<List<Tweet>>(Observable.just(tweets), observable)
+                    .filter { !it.isEmpty() }
                     .flatMapIterable { it -> it }
                     .distinct { it.id }
-                    .toSortedList(tweetDateComparator)
+                    .toSortedList(tweetDateTimeComparator)
                     .subscribe({ onNext(it) }, { onError(it) })
 
     private fun onNext(data: List<Tweet>) {
