@@ -79,7 +79,7 @@ class TwitterRepo : TwitterDataSource {
 
     override fun unFavorite(userId: Long?, tweet: Tweet?): Observable<Tweet>
             = remoteSource.unFavorite(userId, tweet)
-            .switchMap { localSource?.unFavorite(userId, it) }
+            .switchMap { localSource?.unFavorite(userId, tweet) }
             .compose(applySchedulers<Tweet>(schedulerProvider))
             .compose(connectivityCheck<Tweet>())
 

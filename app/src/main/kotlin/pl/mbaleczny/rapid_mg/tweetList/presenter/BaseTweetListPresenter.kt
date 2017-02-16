@@ -96,8 +96,11 @@ abstract class BaseTweetListPresenter(val dataSource: TwitterDataSource)
         if (data.isNotEmpty()) {
             firstId = data.first().id
             lastId = data.last().id
-            view?.setTweets(data)
+        } else {
+            firstId = null
+            lastId = null
         }
+        view?.setTweets(data)
         view?.hideProgress()
     }
 

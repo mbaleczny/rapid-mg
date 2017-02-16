@@ -1,5 +1,7 @@
 package pl.mbaleczny.rapid_mg.tweetList.presenter
 
+import com.twitter.sdk.android.core.TwitterCore
+import com.twitter.sdk.android.core.models.Tweet
 import io.reactivex.disposables.Disposable
 import pl.mbaleczny.rapid_mg.data.TwitterDataSource
 
@@ -16,6 +18,20 @@ class FavoritesPresenter(twitterDataSource: TwitterDataSource)
     override fun loadOlderTweets() {
         disposables.add(getTweets(_userId, null, lastId))
     }
+
+    override fun onUnlike(tweet: Tweet) {
+        if (_userId == TwitterCore.getInstance().sessionManager.activeSession.userId)
+            disposables.add(removeLike(tweet))
+        else
+            super.onUnlike(tweet)
+    }
+
+    private fun removeLike(tweet: Tweet): Disposable =
+            dataSource.unFavorite(_userId, tweet)
+                    .subscribe({
+                        tweets.remove(tweet)
+                        view?.setTweets(tweets)
+                    }, { view?.showError(it) })
 
     override fun getTweets(_userId: Long?, sinceId: Long?, maxId: Long?): Disposable =
             applyObserver(dataSource.favorites(_userId, TWEETS_COUNT, sinceId, maxId))
