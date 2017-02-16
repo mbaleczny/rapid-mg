@@ -3,6 +3,7 @@ package pl.mbaleczny.rapid_mg
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
+import android.support.annotation.VisibleForTesting
 import com.twitter.sdk.android.Twitter
 import com.twitter.sdk.android.core.TwitterAuthConfig
 import io.fabric.sdk.android.Fabric
@@ -13,7 +14,7 @@ import pl.mbaleczny.rapid_mg.dagger.DaggerAppComponent
 /**
  * Created by mariusz on 03.02.17.
  */
-class RapidApp : Application() {
+open class RapidApp : Application() {
 
     companion object {
         lateinit var instance: RapidApp
@@ -25,6 +26,11 @@ class RapidApp : Application() {
 
             val info = cm?.activeNetworkInfo
             return info != null && info.isConnectedOrConnecting
+        }
+
+        @VisibleForTesting
+        fun setTestInstance(rapidApp: RapidApp) {
+            instance = rapidApp
         }
     }
 
