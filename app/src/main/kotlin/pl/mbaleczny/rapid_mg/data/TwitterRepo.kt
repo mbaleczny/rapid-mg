@@ -5,7 +5,9 @@ import com.twitter.sdk.android.core.models.Tweet
 import com.twitter.sdk.android.core.models.User
 import io.reactivex.Observable
 import io.reactivex.Scheduler
-import pl.mbaleczny.rapid_mg.network.RxTwitterService
+import pl.mbaleczny.rapid_mg.RapidApp
+import pl.mbaleczny.rapid_mg.util.RxUtils.Companion.applySchedulers
+import pl.mbaleczny.rapid_mg.util.RxUtils.Companion.connectivityCheck
 import pl.mbaleczny.rapid_mg.util.schedulers.BaseSchedulerProvider
 
 /**
@@ -13,16 +15,19 @@ import pl.mbaleczny.rapid_mg.util.schedulers.BaseSchedulerProvider
  */
 class TwitterRepo : TwitterDataSource {
 
-    private var rxTwitterService: RxTwitterService
+    private var remoteSource: TwitterDataSource
+    private var localSource: TwitterDataSource?
     private var schedulerProvider: BaseSchedulerProvider? = null
 
     private var io: Scheduler
     private var ui: Scheduler
     private var computation: Scheduler
 
-    constructor(rxTwitterService: RxTwitterService,
+    constructor(remoteDataSource: TwitterDataSource,
+                localDataSource: TwitterDataSource,
                 schedulerProvider: BaseSchedulerProvider) {
-        this.rxTwitterService = rxTwitterService
+        this.remoteSource = remoteDataSource
+        this.localSource = localDataSource
         this.schedulerProvider = schedulerProvider
 
         io = schedulerProvider.io()
@@ -31,35 +36,73 @@ class TwitterRepo : TwitterDataSource {
     }
 
     @VisibleForTesting
-    constructor(rxTwitterService: RxTwitterService, scheduler: Scheduler) {
-        this.rxTwitterService = rxTwitterService
+    constructor(remoteDataSource: TwitterDataSource,
+                localDataSource: TwitterDataSource,
+                scheduler: Scheduler) {
+        this.remoteSource = remoteDataSource
+        this.localSource = localDataSource
         this.schedulerProvider = null
         io = scheduler
         ui = scheduler
         computation = scheduler
     }
 
-    override fun getUserTimeline(userId: Long?, count: Int?, sinceId: Long?, maxId: Long?): Observable<List<Tweet>>
-            = compose(rxTwitterService.userTimeline(userId, count, sinceId, maxId))
 
-    override fun getHomeTimeline(userId: Long?, count: Int?, sinceId: Long?, maxId: Long?): Observable<List<Tweet>>
-            = compose(rxTwitterService.homeTimeline(userId, count, sinceId, maxId))
+    override fun getUserTimeline(userId: Long?, count: Int?, sinceId: Long?, maxId: Long?)
+            : Observable<List<Tweet>>
+            = (remoteSource.getUserTimeline(userId, count, sinceId, maxId)
+            .compose(applySchedulers<List<Tweet>>(schedulerProvider))
+            .compose(connectivityCheck<List<Tweet>>()))
 
-    override fun favorites(userId: Long?, count: Int?, sinceId: Long?, maxId: Long?): Observable<List<Tweet>>
-            = compose(rxTwitterService.favorites(userId, count, sinceId, maxId))
 
-    override fun favorite(id: Long?): Observable<Tweet>
-            = compose(rxTwitterService.favorite(id))
+    override fun getHomeTimeline(userId: Long?, count: Int?, sinceId: Long?, maxId: Long?)
+            : Observable<List<Tweet>>
+            = remoteSource.getHomeTimeline(userId, count, sinceId, maxId)
+            .compose(applySchedulers<List<Tweet>>(schedulerProvider))
+            .compose(connectivityCheck<List<Tweet>>())
 
-    override fun unFavorite(id: Long?): Observable<Tweet>
-            = compose(rxTwitterService.unFavorite(id))
+
+    override fun favorites(userId: Long?, count: Int?, sinceId: Long?, maxId: Long?)
+            : Observable<List<Tweet>> =
+            if (RapidApp.isNetworkAvailable())
+                getAndSaveFavTweets(userId, count, sinceId, maxId)
+            else
+                getLocalFavorites(userId, count, sinceId, maxId)
+
+
+    override fun favorite(userId: Long?, tweet: Tweet?): Observable<Tweet>
+            = remoteSource.favorite(userId, tweet)
+            .switchMap { localSource?.favorite(userId, it) }
+            .compose(applySchedulers<Tweet>(schedulerProvider))
+            .compose(connectivityCheck<Tweet>())
+
+
+    override fun unFavorite(userId: Long?, tweet: Tweet?): Observable<Tweet>
+            = remoteSource.unFavorite(userId, tweet)
+            .switchMap { localSource?.unFavorite(userId, it) }
+            .compose(applySchedulers<Tweet>(schedulerProvider))
+            .compose(connectivityCheck<Tweet>())
+
 
     override fun getUser(userId: Long?, includeEntities: Boolean): Observable<User>
-            = compose(rxTwitterService.user(userId, includeEntities))
+            = remoteSource.getUser(userId, includeEntities)
+            .compose(applySchedulers<User>(schedulerProvider))
+            .compose(connectivityCheck<User>())
 
-    private fun <T> compose(obs: Observable<T>): Observable<T> {
-        return obs.subscribeOn(io).observeOn(ui)
-    }
+
+    private fun getLocalFavorites(userId: Long?, count: Int?, sinceId: Long?, maxId: Long?)
+            : Observable<List<Tweet>> =
+            localSource?.favorites(userId, count, sinceId, maxId)!!
+                    .compose(applySchedulers<List<Tweet>>(schedulerProvider))
+
+
+    private fun getAndSaveFavTweets(userId: Long?, count: Int?, sinceId: Long?, maxId: Long?)
+            : Observable<List<Tweet>>
+            = remoteSource.favorites(userId, count, sinceId, maxId)
+            .switchMap { Observable.fromIterable(it) }
+            .switchMap { localSource?.favorite(userId, it) }
+            .toList()
+            .toObservable()
+            .compose(applySchedulers<List<Tweet>>(schedulerProvider))
 
 }
-

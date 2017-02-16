@@ -15,12 +15,12 @@ class NetworkModule {
 
     @Provides
     @PerActivity
-    fun twitterApiClient(): CustomTwitterApiClient = CustomTwitterApiClient(Twitter.getSessionManager().activeSession)
+    fun twitterApiClient(): CustomTwitterApiClient
+            = CustomTwitterApiClient(Twitter.getSessionManager().activeSession)
 
     @Provides
     @PerActivity
-    fun rxTwitterService(twitterApiClient: CustomTwitterApiClient): RxTwitterService {
-        return twitterApiClient.getCustomService(RxTwitterService::class.java)
-    }
+    fun rxTwitterService(twitterApiClient: CustomTwitterApiClient): RxTwitterService
+            = twitterApiClient.getCustomService(RxTwitterService::class.java)
 
 }

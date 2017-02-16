@@ -15,9 +15,9 @@ interface TwitterDataSource {
 
     fun favorites(userId: Long?, count: Int?, sinceId: Long?, maxId: Long?): Observable<List<Tweet>>
 
-    fun favorite(id: Long?): Observable<Tweet>
+    fun favorite(userId: Long?, tweet: Tweet?): Observable<Tweet>
 
-    fun unFavorite(id: Long?): Observable<Tweet>
+    fun unFavorite(userId: Long?, tweet: Tweet?): Observable<Tweet>
 
     fun getUser(userId: Long?, includeEntities: Boolean): Observable<User>
 

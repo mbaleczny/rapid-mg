@@ -14,13 +14,21 @@ interface RxTwitterService {
     fun userTimeline(@Query("user_id") userId: Long?,
                      @Query("count") count: Int?,
                      @Query("since_id") sinceId: Long?,
-                     @Query("max_id") maxId: Long?): Observable<List<Tweet>>
+                     @Query("max_id") maxId: Long?,
+                     @Query("exclude_replies") excludeReplies: Boolean = true,
+                     @Query("contributor_details") contributeDetails: Boolean = false,
+                     @Query("include_rts") includeRetweets: Boolean = false)
+            : Observable<List<Tweet>>
 
     @GET("/1.1/statuses/home_timeline.json")
     fun homeTimeline(@Query("user_id") userId: Long?,
                      @Query("count") count: Int?,
                      @Query("since_id") sinceId: Long?,
-                     @Query("max_id") maxId: Long?): Observable<List<Tweet>>
+                     @Query("max_id") maxId: Long?,
+                     @Query("exclude_replies") excludeReplies: Boolean = true,
+                     @Query("contributor_details") contributeDetails: Boolean = false,
+                     @Query("include_entities") includeEntities: Boolean = false)
+            : Observable<List<Tweet>>
 
     @GET("/1.1/favorites/list.json")
     fun favorites(@Query("user_id") userId: Long?,
@@ -30,7 +38,7 @@ interface RxTwitterService {
 
     @GET("/1.1/users/show.json")
     fun user(@Query("user_id") userId: Long?,
-             @Query("include_entities") includeEntities: Boolean = true): Observable<User>
+             @Query("include_entities") includeEntities: Boolean = false): Observable<User>
 
     @FormUrlEncoded
     @POST("/1.1/favorites/destroy.json")

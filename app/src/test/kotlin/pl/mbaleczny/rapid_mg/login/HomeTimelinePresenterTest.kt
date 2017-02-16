@@ -8,8 +8,8 @@ import io.reactivex.schedulers.TestScheduler
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
+import pl.mbaleczny.rapid_mg.data.TwitterDataSource
 import pl.mbaleczny.rapid_mg.data.TwitterRepo
-import pl.mbaleczny.rapid_mg.network.RxTwitterService
 import pl.mbaleczny.rapid_mg.tweetList.TweetListContract
 import pl.mbaleczny.rapid_mg.tweetList.presenter.HomeTimelinePresenter
 import java.util.*
@@ -21,7 +21,8 @@ class HomeTimelinePresenterTest {
 
     private lateinit var presenter: HomeTimelinePresenter
 
-    private var twitterService: RxTwitterService = mock()
+    private var remoteDataSource: TwitterDataSource = mock()
+    private var localDataSource: TwitterDataSource = mock()
     private var view: TweetListContract.View = mock()
     private val tweets: MutableList<Tweet> = ArrayList()
     private val scheduler: TestScheduler = TestScheduler()
@@ -29,12 +30,12 @@ class HomeTimelinePresenterTest {
     @Before
     @Throws(Exception::class)
     fun setup() {
-        presenter = HomeTimelinePresenter(TwitterRepo(twitterService, scheduler))
+        presenter = HomeTimelinePresenter(TwitterRepo(remoteDataSource, localDataSource, scheduler))
         presenter.bindView(view)
 
-        whenever(twitterService.homeTimeline(eq(1), any(), anyOrNull(), anyOrNull()))
+        whenever(remoteDataSource.getHomeTimeline(eq(1), any(), anyOrNull(), anyOrNull()))
                 .thenReturn(Observable.just(tweets))
-        whenever(twitterService.homeTimeline(eq(0), any(), anyOrNull(), anyOrNull()))
+        whenever(remoteDataSource.getHomeTimeline(eq(0), any(), anyOrNull(), anyOrNull()))
                 .doReturn(Observable.error(TwitterException("error")))
     }
 
