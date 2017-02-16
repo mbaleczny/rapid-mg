@@ -27,7 +27,10 @@ fun transformTweetDateTime(input: String): String {
                 Log.e(TAG, e.message, e)
                 return input
             }
-            else -> throw e
+            else -> {
+                Log.e(TAG, e.message, e)
+                return "?"
+            }
         }
     }
 }
