@@ -3,8 +3,8 @@ package pl.mbaleczny.rapid_mg.tweetList
 import com.twitter.sdk.android.core.models.Tweet
 import com.twitter.sdk.android.core.models.User
 import pl.mbaleczny.rapid_mg.tweetList.adapter.TweetsRecyclerAdapter
-import pl.mbaleczny.rapid_mg.util.BasePresenter
-import pl.mbaleczny.rapid_mg.util.BaseView
+import pl.mbaleczny.rapid_mg.util.base.BasePresenter
+import pl.mbaleczny.rapid_mg.util.base.BaseView
 
 /**
  * Created by mariusz on 03.02.17.
