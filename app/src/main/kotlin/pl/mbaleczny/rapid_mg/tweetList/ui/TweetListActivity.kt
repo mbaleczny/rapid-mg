@@ -2,6 +2,7 @@ package pl.mbaleczny.rapid_mg.tweetList.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.view.ViewPager
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
@@ -10,6 +11,8 @@ import android.view.Menu
 import android.view.MenuItem
 import com.twitter.sdk.android.core.TwitterCore
 import kotlinx.android.synthetic.main.activity_tweet_list.*
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.toast
 import pl.mbaleczny.rapid_mg.R
 import pl.mbaleczny.rapid_mg.RapidApp
 import pl.mbaleczny.rapid_mg.dagger.network.NetworkModule
@@ -27,6 +30,7 @@ class TweetListActivity : AppCompatActivity() {
     }
 
     private var pagerAdapter: TweetListPagerAdapter? = null
+    private var pressAgainToExit: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +52,16 @@ class TweetListActivity : AppCompatActivity() {
         viewPager.clearOnPageChangeListeners()
     }
 
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount != 0 || pressAgainToExit) {
+            super.onBackPressed()
+            return
+        }
+        pressAgainToExit = true
+        toast(R.string.press_again_to_leave)
+        Handler().postDelayed({ pressAgainToExit = false }, 2000)
+    }
+
     private fun setupActionBar() {
         val ab: ActionBar? = supportActionBar
         ab?.setHomeButtonEnabled(false)
@@ -59,13 +73,20 @@ class TweetListActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.tweet_list_activity_menu, menu)
         val logoutItem: MenuItem? = menu?.findItem(R.id.action_logout)
         logoutItem?.setOnMenuItemClickListener { item ->
-            TwitterCore.getInstance().logOut()
-            val i = Intent(this, LoginActivity::class.java)
-            Intent.makeRestartActivityTask(i.component)
-            finish()
-            startActivity(i)
+            alert(R.string.logout_alert_message) {
+                positiveButton(R.string.yes) { logout() }
+                negativeButton(R.string.no) { }
+            }.show()
             true
         }
+    }
+
+    private fun logout() {
+        TwitterCore.getInstance().logOut()
+        val i = Intent(this, LoginActivity::class.java)
+        Intent.makeRestartActivityTask(i.component)
+        finish()
+        startActivity(i)
     }
 
     private fun initTabLayout() {

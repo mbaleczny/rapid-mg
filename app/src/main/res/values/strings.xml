@@ -10,4 +10,8 @@
     <string name="internal_error_message">Application internal error occurred!</string>
     <string name="following">FOLLOWING</string>
     <string name="followers">FOLLOWERS</string>
+    <string name="press_again_to_leave">Press again to leave</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="logout_alert_message">Do you want to log out?</string>
 </resources>
