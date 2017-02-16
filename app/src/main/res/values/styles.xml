@@ -20,7 +20,7 @@
         <item name="tabTextColor">@android:color/white</item>
     </style>
 
-    <style name="AttributeText">
+    <style name="AttributeText" tools:ignore="NewApi">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:maxLines">1</item>
@@ -46,6 +46,8 @@
     <style name="TweetText" parent="AttributeText" tools:ignore="NewApi">
         <item name="android:layout_marginLeft">@dimen/tw_vh_text_left_margin</item>
         <item name="android:layout_marginStart">@dimen/tw_vh_text_left_margin</item>
+        <item name="android:layout_marginEnd">@dimen/tw_vh_text_left_margin</item>
+        <item name="android:layout_marginRight">@dimen/tw_vh_text_left_margin</item>
         <item name="android:textColor">#292f33</item>
         <item name="android:maxLines">5</item>
         <item name="android:maxLength">140</item>
