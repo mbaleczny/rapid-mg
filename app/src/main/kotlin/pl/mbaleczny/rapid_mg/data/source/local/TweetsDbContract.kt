@@ -12,7 +12,6 @@ abstract class TweetsDbContract private constructor() {
             val TABLE = "tweet_table"
             val COLUMN_TWEET_ID = "tweet_id"
             val COLUMN_USER_ID = "user_id"
-            val COLUMN_CREATED_AT = "created_at"
             val COLUMN_CONTENT = "content"
         }
     }
