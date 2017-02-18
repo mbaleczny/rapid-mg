@@ -3,10 +3,10 @@ package pl.mbaleczny.rapid_mg.dagger.tweetList
 import com.twitter.sdk.android.core.TwitterCore
 import dagger.Module
 import dagger.Provides
+import pl.mbaleczny.rapid_mg.dagger.data.qualifier.TwitterRepoDataSource
 import pl.mbaleczny.rapid_mg.dagger.scope.PerActivity
 import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.FavoritesPresenterType
 import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.NewsPresenterType
-import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.TwitterRepoDataSource
 import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.UserTimelinePresenterType
 import pl.mbaleczny.rapid_mg.data.TwitterDataSource
 import pl.mbaleczny.rapid_mg.tweetList.TweetListContract

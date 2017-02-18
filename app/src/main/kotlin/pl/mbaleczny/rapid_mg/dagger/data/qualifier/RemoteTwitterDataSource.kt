@@ -1,4 +1,4 @@
-package pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier
+package pl.mbaleczny.rapid_mg.dagger.data.qualifier
 
 import javax.inject.Qualifier
 

@@ -4,10 +4,10 @@ import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import pl.mbaleczny.rapid_mg.RapidApp
+import pl.mbaleczny.rapid_mg.dagger.data.qualifier.LocalTwitterDataSource
+import pl.mbaleczny.rapid_mg.dagger.data.qualifier.RemoteTwitterDataSource
+import pl.mbaleczny.rapid_mg.dagger.data.qualifier.TwitterRepoDataSource
 import pl.mbaleczny.rapid_mg.dagger.scope.PerActivity
-import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.LocalTwitterDataSource
-import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.RemoteTwitterDataSource
-import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.TwitterRepoDataSource
 import pl.mbaleczny.rapid_mg.data.TwitterDataSource
 import pl.mbaleczny.rapid_mg.data.TwitterRepo
 import pl.mbaleczny.rapid_mg.data.source.local.TwitterLocalDataSource

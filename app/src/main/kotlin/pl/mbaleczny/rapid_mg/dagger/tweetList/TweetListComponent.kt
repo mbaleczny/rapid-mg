@@ -3,11 +3,11 @@ package pl.mbaleczny.rapid_mg.dagger.tweetList
 import dagger.Component
 import pl.mbaleczny.rapid_mg.dagger.AppComponent
 import pl.mbaleczny.rapid_mg.dagger.data.TwitterDataSourceModule
+import pl.mbaleczny.rapid_mg.dagger.data.qualifier.TwitterRepoDataSource
 import pl.mbaleczny.rapid_mg.dagger.network.NetworkModule
 import pl.mbaleczny.rapid_mg.dagger.scope.PerActivity
 import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.FavoritesPresenterType
 import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.NewsPresenterType
-import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.TwitterRepoDataSource
 import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.UserTimelinePresenterType
 import pl.mbaleczny.rapid_mg.data.TwitterDataSource
 import pl.mbaleczny.rapid_mg.tweetList.TweetListContract
