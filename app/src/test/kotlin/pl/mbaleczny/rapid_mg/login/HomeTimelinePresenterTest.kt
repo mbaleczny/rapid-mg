@@ -44,16 +44,14 @@ class HomeTimelinePresenterTest {
                         schedulerProvider))
         presenter.bindView(view)
 
+        mockSchedulers()
+        mockNetworkAvailabilityCheck()
+    }
+
+    private fun mockSchedulers() {
         whenever(schedulerProvider.io()).thenReturn(scheduler)
         whenever(schedulerProvider.ui()).thenReturn(scheduler)
         whenever(schedulerProvider.computation()).thenReturn(scheduler)
-
-        mockNetworkAvailabilityCheck()
-
-        whenever(remoteDataSource.getHomeTimeline(eq(1), any(), anyOrNull(), anyOrNull()))
-                .thenReturn(Observable.just(tweets))
-        whenever(remoteDataSource.getHomeTimeline(eq(0), any(), anyOrNull(), anyOrNull()))
-                .doReturn(Observable.error(TwitterException("error")))
     }
 
     private fun mockNetworkAvailabilityCheck() {
@@ -72,6 +70,9 @@ class HomeTimelinePresenterTest {
         presenter._userId = 1
         presenter.firstId = 0
 
+        whenever(remoteDataSource.getHomeTimeline(eq(1), any(), anyOrNull(), anyOrNull()))
+                .thenReturn(Observable.just(tweets))
+
         presenter.loadNewerTweets()
         scheduler.triggerActions()
 
@@ -81,6 +82,9 @@ class HomeTimelinePresenterTest {
     @Test
     fun getTweets_failed() {
         presenter._userId = 0
+
+        whenever(remoteDataSource.getHomeTimeline(eq(0), any(), anyOrNull(), anyOrNull()))
+                .doReturn(Observable.error(TwitterException("error")))
 
         presenter.loadNewerTweets()
         scheduler.triggerActions()
@@ -127,7 +131,7 @@ class HomeTimelinePresenterTest {
         whenever(localDataSource.unFavorite(eq(1), eq(tweet)))
                 .doReturn(Observable.just(tweet))
 
-        presenter.onLike(tweet)
+        presenter.onUnlike(tweet)
         scheduler.triggerActions()
 
         verifyZeroInteractions(view)
@@ -142,7 +146,7 @@ class HomeTimelinePresenterTest {
         whenever(localDataSource.unFavorite(eq(0), eq(tweet)))
                 .doReturn(Observable.error(TwitterException("error")))
 
-        presenter.onLike(tweet)
+        presenter.onUnlike(tweet)
         scheduler.triggerActions()
 
         verify(view).showError(Mockito.any(TwitterException::class.java))

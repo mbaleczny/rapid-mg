@@ -1,6 +1,7 @@
 package pl.mbaleczny.rapid_mg.login
 
 import com.nhaarman.mockito_kotlin.anyOrNull
+import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
 import com.twitter.sdk.android.core.Result
@@ -23,8 +24,8 @@ class LoginPresenterTest {
     @Before
     fun setup() {
         presenter = LoginPresenter()
-        view = mock(LoginContract.View::class)
-        result = mock(Result::class) as Result<TwitterSession>
+        view = mock()
+        result = mock()
         presenter.bindView(view)
     }
 
