@@ -20,7 +20,8 @@ import pl.mbaleczny.rapid_mg.util.transformTweetDateTime
 /**
  * Created by mariusz on 05.02.17.
  */
-class TweetsRecyclerAdapter(val context: Context) : RecyclerView.Adapter<TweetsRecyclerAdapter.ViewHolder>() {
+class TweetsRecyclerAdapter(val context: Context)
+    : RecyclerView.Adapter<TweetsRecyclerAdapter.ViewHolder>() {
 
     constructor(context: Context, listener: TweetListContract.Presenter) : this(context) {
         this.listener = listener
@@ -93,12 +94,8 @@ class TweetsRecyclerAdapter(val context: Context) : RecyclerView.Adapter<TweetsR
     }
 
     interface onTweetAction {
-
         fun onLike(tweet: Tweet)
-
         fun onUnlike(tweet: Tweet)
-
         fun showUser(user: User)
-
     }
 }

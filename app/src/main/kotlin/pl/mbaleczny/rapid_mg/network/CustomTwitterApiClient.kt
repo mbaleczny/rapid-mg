@@ -19,6 +19,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.ConcurrentHashMap
 
 /**
+ * TwitterApiClient with added [HttpLoggingInterceptor][okhttp3.logging.HttpLoggingInterceptor]
+ * and [RxJava2CallAdapterFactory][com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory].
+ *
  * Created by mariusz on 08.02.17.
  */
 class CustomTwitterApiClient(session: TwitterSession) : TwitterApiClient(session) {

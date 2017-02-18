@@ -18,6 +18,11 @@ class FavoritesPresenter(twitterDataSource: TwitterDataSource, val loggedUserId:
         disposables.add(getTweets(_userId, null, lastId))
     }
 
+    /**
+     * Checks if [_userId] is equal to [loggedUserId] to
+     * decide whether to call custom action on remove liked
+     * Tweet.
+     */
     override fun onUnlike(tweet: Tweet) {
         if (_userId == loggedUserId)
             disposables.add(removeLike(tweet))
@@ -25,6 +30,13 @@ class FavoritesPresenter(twitterDataSource: TwitterDataSource, val loggedUserId:
             super.onUnlike(tweet)
     }
 
+    /**
+     * If current instance of [FavoritesPresenter] represents
+     * favored Tweets of logged user, then on removing one it's
+     * removed from [tweets] lists and modified list is passed
+     * to [view] as removed Tweet shouldn't be displayed anymore.
+     * Refreshing whole list would be more expensive.
+     */
     private fun removeLike(tweet: Tweet): Disposable =
             dataSource.unFavorite(_userId, tweet)
                     .subscribe({

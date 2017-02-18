@@ -42,6 +42,8 @@ open class RapidApp : Application() {
         appComponent = DaggerAppComponent.builder()
                 .appModule(AppModule(this))
                 .build()
+
+        // Enables vector drawables for API level below 21 (Lollipop)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
     }
 

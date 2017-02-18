@@ -3,36 +3,25 @@ package pl.mbaleczny.rapid_mg.data
 import com.twitter.sdk.android.core.models.Tweet
 import com.twitter.sdk.android.core.models.User
 import io.reactivex.Observable
-import io.reactivex.Scheduler
 import pl.mbaleczny.rapid_mg.RapidApp
 import pl.mbaleczny.rapid_mg.util.applySchedulers
 import pl.mbaleczny.rapid_mg.util.connectivityCheck
 import pl.mbaleczny.rapid_mg.util.schedulers.BaseSchedulerProvider
 
 /**
+ * Manages data sources, ie. remote and local and applies
+ * RxJava schedulers.
+ *
  * Created by mariusz on 09.02.17.
  */
-class TwitterRepo : TwitterDataSource {
+class TwitterRepo(
+        remoteDataSource: TwitterDataSource,
+        localDataSource: TwitterDataSource,
+        schedulerProvider: BaseSchedulerProvider) : TwitterDataSource {
 
-    private var remoteSource: TwitterDataSource
-    private var localSource: TwitterDataSource?
-    private var schedulerProvider: BaseSchedulerProvider? = null
-
-    private var io: Scheduler
-    private var ui: Scheduler
-    private var computation: Scheduler
-
-    constructor(remoteDataSource: TwitterDataSource,
-                localDataSource: TwitterDataSource,
-                schedulerProvider: BaseSchedulerProvider) {
-        this.remoteSource = remoteDataSource
-        this.localSource = localDataSource
-        this.schedulerProvider = schedulerProvider
-
-        io = schedulerProvider.io()
-        ui = schedulerProvider.ui()
-        computation = schedulerProvider.computation()
-    }
+    private var remoteSource: TwitterDataSource = remoteDataSource
+    private var localSource: TwitterDataSource? = localDataSource
+    private var schedulerProvider: BaseSchedulerProvider? = schedulerProvider
 
     override fun getUserTimeline(userId: Long?, count: Int?, sinceId: Long?, maxId: Long?)
             : Observable<List<Tweet>>
@@ -47,7 +36,10 @@ class TwitterRepo : TwitterDataSource {
             .compose(applySchedulers<List<Tweet>>(schedulerProvider))
             .compose(connectivityCheck<List<Tweet>>())
 
-
+    /**
+     * Network availability check as last resort for Retrofit2
+     * error on offline request.
+     */
     override fun favorites(userId: Long?, count: Int?, sinceId: Long?, maxId: Long?)
             : Observable<List<Tweet>> =
             if (RapidApp.isNetworkAvailable())

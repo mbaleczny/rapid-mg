@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'org.jetbrains.dokka-android'
 
 android {
     compileSdkVersion 25
@@ -86,4 +87,15 @@ dependencies {
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+}
+
+dokka {
+    includes = ['README.md']
+
+    linkMapping {
+        dir = "src/main/kotlin"
+        url = "https://github.com/mbaleczny/rapid-mg/tree/master/app/src/main/kotlin"
+        suffix = "#L"
+    }
+    sourceDirs = files('src/main/kotlin')
 }

@@ -10,6 +10,10 @@ import java.io.IOException
 /**
  * Created by mariusz on 16.02.17.
  */
+
+/**
+ * Sets schedulers for default action (which is network request)
+ */
 fun <T> applySchedulers(schedulerProvider: BaseSchedulerProvider?)
         : ObservableTransformer<T, T> =
         ObservableTransformer {
@@ -17,6 +21,9 @@ fun <T> applySchedulers(schedulerProvider: BaseSchedulerProvider?)
                     .observeOn(schedulerProvider?.ui())
         }
 
+/**
+ *  Handles action on network connection availability.
+ */
 fun <T> connectivityCheck(): ObservableTransformer<T, T> =
         ObservableTransformer {
             if (RapidApp.isNetworkAvailable())

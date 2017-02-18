@@ -84,6 +84,12 @@ abstract class BaseTweetListPresenter(val dataSource: TwitterDataSource)
             dataSource.unFavorite(_userId, tweet)
                     .subscribe({ }, { view?.showError(it) })
 
+    /**
+     * Concatenate Observable of tweets stored in list with Observable argument.
+     * Empty lists are filtered out and items are distinct by its id to got rid of
+     * doubles. Then it's sorted by date and time. The final Observable result is
+     * subscribed with specified actions onNext and onError.
+     */
     protected fun applyObserver(observable: Observable<List<Tweet>>): Disposable =
             Observable.concat<List<Tweet>>(Observable.just(tweets), observable)
                     .filter { !it.isEmpty() }
@@ -92,6 +98,12 @@ abstract class BaseTweetListPresenter(val dataSource: TwitterDataSource)
                     .toSortedList(tweetDateTimeComparator)
                     .subscribe({ onNext(it) }, { onError(it) })
 
+    /**
+     * Id of first and last element are stored for next call, ie. refreshing
+     * by swipe refresh sinceId will be passed to network request as reference
+     * for next possible Tweets. Same way scrolling down the list maxId will
+     * define reference to older Tweets.
+     */
     private fun onNext(data: List<Tweet>) {
         if (data.isNotEmpty()) {
             firstId = data.first().id

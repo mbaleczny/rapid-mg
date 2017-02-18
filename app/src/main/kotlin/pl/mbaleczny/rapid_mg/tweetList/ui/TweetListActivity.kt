@@ -26,6 +26,7 @@ import pl.mbaleczny.rapid_mg.tweetList.adapter.TweetListPagerAdapter
 class TweetListActivity : AppCompatActivity() {
 
     companion object {
+        private const val ON_BACK_PRESS_TIMEOUT: Long = 2000
         var tweetListComponent: TweetListComponent? = null
     }
 
@@ -59,7 +60,7 @@ class TweetListActivity : AppCompatActivity() {
         }
         pressAgainToExit = true
         toast(R.string.press_again_to_leave)
-        Handler().postDelayed({ pressAgainToExit = false }, 2000)
+        Handler().postDelayed({ pressAgainToExit = false }, ON_BACK_PRESS_TIMEOUT)
     }
 
     private fun setupActionBar() {
@@ -133,6 +134,11 @@ class TweetListActivity : AppCompatActivity() {
         pagerAdapter?.addFragment(pos, fragment)
     }
 
+    /**
+     * Fragment inside ViewPager have different lifecycle. Methods
+     * like [onResume], [onPause] are not invoked, so [pageChangeListener]
+     * solves this by calling those methods when detected page change.
+     */
     private val pageChangeListener: ViewPager.OnPageChangeListener =
             object : ViewPager.OnPageChangeListener {
                 var oldPosition = 0
