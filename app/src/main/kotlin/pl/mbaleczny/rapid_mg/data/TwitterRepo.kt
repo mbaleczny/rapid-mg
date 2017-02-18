@@ -1,6 +1,5 @@
 package pl.mbaleczny.rapid_mg.data
 
-import android.support.annotation.VisibleForTesting
 import com.twitter.sdk.android.core.models.Tweet
 import com.twitter.sdk.android.core.models.User
 import io.reactivex.Observable
@@ -34,19 +33,6 @@ class TwitterRepo : TwitterDataSource {
         ui = schedulerProvider.ui()
         computation = schedulerProvider.computation()
     }
-
-    @VisibleForTesting
-    constructor(remoteDataSource: TwitterDataSource,
-                localDataSource: TwitterDataSource,
-                scheduler: Scheduler) {
-        this.remoteSource = remoteDataSource
-        this.localSource = localDataSource
-        this.schedulerProvider = null
-        io = scheduler
-        ui = scheduler
-        computation = scheduler
-    }
-
 
     override fun getUserTimeline(userId: Long?, count: Int?, sinceId: Long?, maxId: Long?)
             : Observable<List<Tweet>>
