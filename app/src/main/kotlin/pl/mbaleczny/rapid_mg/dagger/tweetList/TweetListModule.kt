@@ -1,5 +1,6 @@
 package pl.mbaleczny.rapid_mg.dagger.tweetList
 
+import com.twitter.sdk.android.core.TwitterCore
 import dagger.Module
 import dagger.Provides
 import pl.mbaleczny.rapid_mg.dagger.scope.PerActivity
@@ -29,8 +30,10 @@ class TweetListModule {
     @Provides
     @FavoritesPresenterType
     fun provideFavoritesPresenter(@TwitterRepoDataSource twitterDataSource: TwitterDataSource)
-            : TweetListContract.Presenter
-            = FavoritesPresenter(twitterDataSource)
+            : TweetListContract.Presenter =
+            FavoritesPresenter(
+                    twitterDataSource,
+                    TwitterCore.getInstance().sessionManager.activeSession.userId)
 
     @Provides
     @UserTimelinePresenterType
