@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.support.annotation.VisibleForTesting
+import android.support.v7.app.AppCompatDelegate
 import com.twitter.sdk.android.Twitter
 import com.twitter.sdk.android.core.TwitterAuthConfig
 import io.fabric.sdk.android.Fabric
@@ -41,6 +42,7 @@ open class RapidApp : Application() {
         appComponent = DaggerAppComponent.builder()
                 .appModule(AppModule(this))
                 .build()
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
     }
 
     private fun initFabric() {
