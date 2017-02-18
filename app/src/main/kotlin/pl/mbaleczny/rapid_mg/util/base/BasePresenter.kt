@@ -3,7 +3,7 @@ package pl.mbaleczny.rapid_mg.util.base
 /**
  * Created by mariusz on 03.02.17.
  */
-interface BasePresenter<T> {
+interface BasePresenter<in T : BaseView> {
 
     fun bindView(view: T)
 

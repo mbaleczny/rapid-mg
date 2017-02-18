@@ -17,7 +17,10 @@ import pl.mbaleczny.rapid_mg.tweetList.ui.TweetListFragment
  * Created by mariusz on 04.02.17.
  */
 @PerActivity
-@Component(modules = arrayOf(TweetListModule::class, NetworkModule::class, TwitterDataSourceModule::class),
+@Component(
+        modules = arrayOf(TweetListModule::class,
+                NetworkModule::class,
+                TwitterDataSourceModule::class),
         dependencies = arrayOf(AppComponent::class))
 interface TweetListComponent {
 

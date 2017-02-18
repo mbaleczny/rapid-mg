@@ -85,7 +85,8 @@ class UserActivity : AppCompatActivity(), UserContract.View {
     private fun initToolbar() {
         setSupportActionBar(toolbar)
         setupActionBar()
-        collapsing_toolbar?.setExpandedTitleColor(ContextCompat.getColor(this, android.R.color.transparent))
+        collapsing_toolbar?.setExpandedTitleColor(
+                ContextCompat.getColor(this, android.R.color.transparent))
         collapsing_toolbar.isTitleEnabled = false
     }
 
@@ -110,8 +111,10 @@ class UserActivity : AppCompatActivity(), UserContract.View {
     }
 
     private fun addTweetListTabs(userId: Long) {
-        val tweetListFragment = TweetListFragment.newInstance(userId, TweetListActivity.tweetListComponent?.userTimelinePresenter()!!)
-        val favoritesFragment = TweetListFragment.newInstance(userId, TweetListActivity.tweetListComponent?.favoritesPresenter()!!)
+        val tweetListFragment = TweetListFragment.newInstance(userId,
+                TweetListActivity.tweetListComponent?.userTimelinePresenter()!!)
+        val favoritesFragment = TweetListFragment.newInstance(userId,
+                TweetListActivity.tweetListComponent?.favoritesPresenter()!!)
 
         addScreen(tweetListFragment)
         addScreen(favoritesFragment)

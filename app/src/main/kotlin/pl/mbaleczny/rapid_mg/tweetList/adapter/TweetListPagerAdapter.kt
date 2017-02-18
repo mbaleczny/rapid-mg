@@ -7,7 +7,8 @@ import android.support.v4.app.FragmentPagerAdapter
 /**
  * Created by mariusz on 07.02.17.
  */
-class TweetListPagerAdapter(supportFragmentManager: FragmentManager) : FragmentPagerAdapter(supportFragmentManager) {
+class TweetListPagerAdapter(supportFragmentManager: FragmentManager)
+    : FragmentPagerAdapter(supportFragmentManager) {
 
     val fragments: MutableList<Fragment> = mutableListOf()
 

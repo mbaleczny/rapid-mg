@@ -33,9 +33,12 @@ class LoginFragment : Fragment(), LoginContract.View {
         presenter.bindView(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater?,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         val v: View? = inflater?.inflate(R.layout.fragment_login, container, false)
-        loginButton = v?.findViewById(R.id.fragment_login_twitter_login_button) as TwitterLoginButton
+        loginButton = v?.findViewById(R.id.fragment_login_twitter_login_button)
+                as TwitterLoginButton
         loginButton.callback = presenter.getTwitterCallback()
         return v
     }

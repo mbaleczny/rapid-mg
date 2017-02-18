@@ -6,14 +6,14 @@ import pl.mbaleczny.rapid_mg.data.TwitterDataSource
 /**
  * Created by mariusz on 11.02.17.
  */
-class UserPresenter(val twitterDataSource: TwitterDataSource) : UserContract.Presenter {
+class UserPresenter(val dataSource: TwitterDataSource) : UserContract.Presenter {
 
     private var view: UserContract.View? = null
     private var userId: Long? = null
     private val disposables = CompositeDisposable()
 
     override fun subscribe() {
-        disposables.add(twitterDataSource.getUser(userId, false)
+        disposables.add(dataSource.getUser(userId, false)
                 .subscribe({ view?.setUser(it) }, { view?.showError(it) }))
     }
 

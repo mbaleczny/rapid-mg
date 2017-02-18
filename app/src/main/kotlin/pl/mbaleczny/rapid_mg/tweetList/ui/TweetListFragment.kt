@@ -49,7 +49,9 @@ class TweetListFragment : Fragment(), TweetListContract.View {
         presenter.setUserId(arguments?.getLong(USER_ID_ARG))
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater?,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         val v = inflater?.inflate(R.layout.fragment_tweet_list, container, false)
         tweetList = v?.findViewById(R.id.fragment_tweet_list_recycler_view) as RecyclerView
         emptyLabel = v?.findViewById(R.id.empty_list_label) as TextView
@@ -105,12 +107,15 @@ class TweetListFragment : Fragment(), TweetListContract.View {
         val layoutManager: LinearLayoutManager = LinearLayoutManager(context)
         tweetList?.layoutManager = layoutManager
         tweetList?.adapter = adapter
-        tweetList?.setOnScrollChangeListener(object : RecyclerView.OnScrollListener(), View.OnScrollChangeListener {
-            override fun onScrollChange(v: View?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) {
+        tweetList?.setOnScrollChangeListener(object
+            : RecyclerView.OnScrollListener(), View.OnScrollChangeListener {
+            override fun onScrollChange(v: View?, scrollX: Int, scrollY: Int, oldScrollX: Int,
+                                        oldScrollY: Int) {
                 val firstVisibleItemPos = layoutManager.findFirstCompletelyVisibleItemPosition()
                 val lastVisibleItemPos = layoutManager.findLastCompletelyVisibleItemPosition()
 
-                if (firstVisibleItemPos != 0 && lastVisibleItemPos == adapter?.itemCount?.minus(1)) {
+                if (firstVisibleItemPos != 0 &&
+                        lastVisibleItemPos == adapter?.itemCount?.minus(1)) {
                     presenter.loadOlderTweets()
                 }
             }

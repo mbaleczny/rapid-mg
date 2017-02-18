@@ -136,11 +136,11 @@ class TweetListActivity : AppCompatActivity() {
     private val pageChangeListener: ViewPager.OnPageChangeListener =
             object : ViewPager.OnPageChangeListener {
                 var oldPosition = 0
-                override fun onPageScrollStateChanged(state: Int) {
-                }
+                override fun onPageScrollStateChanged(state: Int) = Unit
 
-                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                }
+                override fun onPageScrolled(position: Int,
+                                            positionOffset: Float,
+                                            positionOffsetPixels: Int) = Unit
 
                 override fun onPageSelected(position: Int) {
                     pagerAdapter?.fragments?.get(position)?.onResume()

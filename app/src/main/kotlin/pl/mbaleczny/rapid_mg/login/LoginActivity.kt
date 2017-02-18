@@ -40,7 +40,8 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val loginFragment: Fragment? = supportFragmentManager.findFragmentById(R.id.activity_container)
+        val loginFragment: Fragment? = supportFragmentManager
+                .findFragmentById(R.id.activity_container)
         loginFragment?.onActivityResult(requestCode, resultCode, data)
     }
 }
