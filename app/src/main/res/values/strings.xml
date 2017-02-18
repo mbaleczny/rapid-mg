@@ -14,4 +14,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="logout_alert_message">Do you want to log out?</string>
+    <string name="no_internet_connection_message">No Internet connection</string>
+    <string name="screen_name_template">\@%s</string>
+    <string name="tweets_count_template">%d Tweets</string>
 </resources>

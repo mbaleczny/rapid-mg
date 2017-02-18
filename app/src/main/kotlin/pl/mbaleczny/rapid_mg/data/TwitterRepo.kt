@@ -6,8 +6,8 @@ import com.twitter.sdk.android.core.models.User
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import pl.mbaleczny.rapid_mg.RapidApp
-import pl.mbaleczny.rapid_mg.util.RxUtils.Companion.applySchedulers
-import pl.mbaleczny.rapid_mg.util.RxUtils.Companion.connectivityCheck
+import pl.mbaleczny.rapid_mg.util.applySchedulers
+import pl.mbaleczny.rapid_mg.util.connectivityCheck
 import pl.mbaleczny.rapid_mg.util.schedulers.BaseSchedulerProvider
 
 /**

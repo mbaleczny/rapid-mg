@@ -75,8 +75,10 @@ class TweetsRecyclerAdapter(val context: Context) : RecyclerView.Adapter<TweetsR
             avatar.setOnClickListener { listener?.showUser(tweet.user) }
 
             fullName.text = tweet.user.name
-            screen_name.text = "@" + tweet.user.screenName
             tweetText.text = tweet.text
+            screen_name.text = String.format(
+                    context.getString(R.string.screen_name_template),
+                    tweet.user.screenName)
 
             timestamp.text = "• " + transformTweetDateTime(tweet.createdAt)
 
