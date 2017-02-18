@@ -10,7 +10,7 @@ import pl.mbaleczny.rapid_mg.data.TwitterDataSource
 /**
  * Created by mariusz on 14.02.17.
  */
-class TwitterLocalDataSource : TwitterDataSource {
+class TwitterLocalDataSource private constructor(context: Context, gson: Gson) : TwitterDataSource {
 
     companion object {
         private var instance: TwitterLocalDataSource? = null
@@ -24,11 +24,7 @@ class TwitterLocalDataSource : TwitterDataSource {
         }
     }
 
-    private var tweetsDbHelper: TweetsDbHelper
-
-    private constructor(context: Context, gson: Gson) {
-        tweetsDbHelper = TweetsDbHelper(context, gson)
-    }
+    private var tweetsDbHelper: TweetsDbHelper = TweetsDbHelper(context, gson)
 
 
     override fun getUserTimeline(userId: Long?, count: Int?, sinceId: Long?, maxId: Long?)
