@@ -1,6 +1,7 @@
 package pl.mbaleczny.rapid_mg.tweetList.ui
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
@@ -107,18 +108,32 @@ class TweetListFragment : Fragment(), TweetListContract.View {
         val layoutManager: LinearLayoutManager = LinearLayoutManager(context)
         tweetList?.layoutManager = layoutManager
         tweetList?.adapter = adapter
-        tweetList?.setOnScrollChangeListener(object
-            : RecyclerView.OnScrollListener(), View.OnScrollChangeListener {
-            override fun onScrollChange(v: View?, scrollX: Int, scrollY: Int, oldScrollX: Int,
-                                        oldScrollY: Int) {
-                val firstVisibleItemPos = layoutManager.findFirstCompletelyVisibleItemPosition()
-                val lastVisibleItemPos = layoutManager.findLastCompletelyVisibleItemPosition()
 
-                if (firstVisibleItemPos != 0 &&
-                        lastVisibleItemPos == adapter?.itemCount?.minus(1)) {
-                    presenter.loadOlderTweets()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            tweetList?.setOnScrollChangeListener(object
+                : RecyclerView.OnScrollListener(), View.OnScrollChangeListener {
+                override fun onScrollChange(v: View?, scrollX: Int, scrollY: Int, oldScrollX: Int,
+                                            oldScrollY: Int) {
+                    onScrollChange(layoutManager)
                 }
-            }
-        })
+            })
+        } else {
+            tweetList?.setOnScrollListener(object :
+                    RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                    onScrollChange(layoutManager)
+                }
+            })
+        }
+    }
+
+    private fun onScrollChange(layoutManager: LinearLayoutManager) {
+        val firstVisibleItemPos = layoutManager.findFirstCompletelyVisibleItemPosition()
+        val lastVisibleItemPos = layoutManager.findLastCompletelyVisibleItemPosition()
+
+        if (firstVisibleItemPos != 0 &&
+                lastVisibleItemPos == adapter?.itemCount?.minus(1)) {
+            presenter.loadOlderTweets()
+        }
     }
 }
