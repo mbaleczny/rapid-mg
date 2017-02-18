@@ -49,6 +49,7 @@
         android:src="@drawable/tw__like_action"
         twitter:contentDescriptionOff="@string/tw__like_tweet"
         twitter:contentDescriptionOn="@string/tw__liked_tweet"
-        twitter:toggleOnClick="true" />
+        twitter:toggleOnClick="true"
+        tools:ignore="PrivateResource" />
 
 </RelativeLayout>
