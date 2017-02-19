@@ -7,7 +7,8 @@ import pl.mbaleczny.rapid_mg.login.LoginContract
 import pl.mbaleczny.rapid_mg.login.LoginPresenter
 
 /**
- * Created by mariusz on 04.02.17.
+ * @author Mariusz Baleczny
+ * @date 04.02.17
  */
 @Module
 class LoginModule {

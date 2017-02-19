@@ -5,7 +5,12 @@ import pl.mbaleczny.rapid_mg.data.TwitterDataSource
 import pl.mbaleczny.rapid_mg.tweetList.TweetListContract
 
 /**
- * Created by mariusz on 04.02.17.
+ * Presenter for TweetList of logged user timeline
+ *
+ * @param [twitterDataSource] source of tweets
+ *
+ * @author Mariusz Baleczny
+ * @date 04.02.17
  */
 
 class HomeTimelinePresenter(twitterDataSource: TwitterDataSource)

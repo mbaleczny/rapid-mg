@@ -8,7 +8,8 @@ import io.reactivex.Observable
 import pl.mbaleczny.rapid_mg.data.TwitterDataSource
 
 /**
- * Created by mariusz on 14.02.17.
+ * @author Mariusz Baleczny
+ * @date 14.02.17
  */
 class TwitterLocalDataSource private constructor(context: Context, gson: Gson) : TwitterDataSource {
 

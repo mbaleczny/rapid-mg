@@ -4,7 +4,8 @@ import io.reactivex.disposables.CompositeDisposable
 import pl.mbaleczny.rapid_mg.data.TwitterDataSource
 
 /**
- * Created by mariusz on 11.02.17.
+ * @author Mariusz Baleczny
+ * @date 11.02.17
  */
 class UserPresenter(val dataSource: TwitterDataSource) : UserContract.Presenter {
 

@@ -5,7 +5,8 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 
 /**
- * Created by mariusz on 07.02.17.
+ * @author Mariusz Baleczny
+ * @date 07.02.17
  */
 class TweetListPagerAdapter(supportFragmentManager: FragmentManager)
     : FragmentPagerAdapter(supportFragmentManager) {

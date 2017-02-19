@@ -47,9 +47,9 @@
         android:layout_alignStart="@+id/tweet_vh_text"
         android:layout_below="@+id/tweet_vh_text"
         android:src="@drawable/tw__like_action"
+        tools:ignore="PrivateResource"
         twitter:contentDescriptionOff="@string/tw__like_tweet"
         twitter:contentDescriptionOn="@string/tw__liked_tweet"
-        twitter:toggleOnClick="true"
-        tools:ignore="PrivateResource" />
+        twitter:toggleOnClick="true" />
 
 </RelativeLayout>

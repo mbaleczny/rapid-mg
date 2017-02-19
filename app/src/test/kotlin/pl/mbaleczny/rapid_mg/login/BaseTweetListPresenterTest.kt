@@ -16,7 +16,8 @@ import pl.mbaleczny.rapid_mg.util.base.BaseView
 import pl.mbaleczny.rapid_mg.util.schedulers.BaseSchedulerProvider
 
 /**
- * Created by mariusz on 18.02.17.
+ * @author Mariusz Baleczny
+ * @date 18.02.17
  */
 abstract class BaseTweetListPresenterTest<V : BaseView, T : BasePresenter<V>> {
 

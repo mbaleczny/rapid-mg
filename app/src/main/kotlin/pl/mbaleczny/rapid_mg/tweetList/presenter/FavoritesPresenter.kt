@@ -5,7 +5,13 @@ import io.reactivex.disposables.Disposable
 import pl.mbaleczny.rapid_mg.data.TwitterDataSource
 
 /**
- * Created by mariusz on 09.02.17.
+ * Presenter for favored TweetLists.
+ *
+ * @param [twitterDataSource] source of tweets
+ * @param [loggedUserId] defines currently logged user id
+ *
+ * @author Mariusz Baleczny
+ * @date 09.02.17
  */
 class FavoritesPresenter(twitterDataSource: TwitterDataSource, val loggedUserId: Long?)
     : BaseTweetListPresenter(twitterDataSource) {

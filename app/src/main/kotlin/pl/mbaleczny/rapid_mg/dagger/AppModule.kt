@@ -6,7 +6,8 @@ import pl.mbaleczny.rapid_mg.RapidApp
 import javax.inject.Singleton
 
 /**
- * Created by mariusz on 03.02.17.
+ * @author Mariusz Baleczny
+ * @date 03.02.17
  */
 @Module
 class AppModule(private var application: RapidApp) {

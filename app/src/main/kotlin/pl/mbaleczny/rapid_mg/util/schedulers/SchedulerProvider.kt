@@ -6,7 +6,11 @@ import io.reactivex.schedulers.Schedulers
 
 
 /**
- * Created by mariusz on 08.02.17.
+ * Default implementation of [BaseSchedulerProvider]
+ * for Android.
+ *
+ * @author Mariusz Baleczny
+ * @date 08.02.17
  */
 class SchedulerProvider : BaseSchedulerProvider {
 

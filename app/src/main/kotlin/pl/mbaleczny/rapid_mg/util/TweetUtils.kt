@@ -5,7 +5,12 @@ import com.twitter.sdk.android.core.models.Tweet
 import com.twitter.sdk.android.core.models.User
 
 /**
- * Created by mariusz on 15.02.17.
+ * Converts [Tweet] to/from Json String.
+ * [Tweet] class contains attributes @SerializedName
+ * but in this application many of them are redundant.
+ *
+ * @author Mariusz Baleczny
+ * @date 15.02.17
  */
 class TweetUtils {
     companion object {

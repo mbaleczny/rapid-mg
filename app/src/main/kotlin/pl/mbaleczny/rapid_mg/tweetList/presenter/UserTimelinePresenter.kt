@@ -4,7 +4,12 @@ import io.reactivex.disposables.Disposable
 import pl.mbaleczny.rapid_mg.data.TwitterDataSource
 
 /**
- * Created by mariusz on 09.02.17.
+ * Presenter for TweetList of user addressed with [_userId]
+ *
+ * @param [twitterDataSource] source of tweets
+ *
+ * @author Mariusz Baleczny
+ * @date 09.02.17
  */
 class UserTimelinePresenter(twitterDataSource: TwitterDataSource)
     : BaseTweetListPresenter(twitterDataSource) {

@@ -12,7 +12,8 @@ import org.junit.Before
 import org.junit.Test
 
 /**
- * Created by mariusz on 07.02.17.
+ * @author Mariusz Baleczny
+ * @date 07.02.17
  */
 class LoginPresenterTest {
 

@@ -1,6 +1,9 @@
 package pl.mbaleczny.rapid_mg.util.base
 
 /**
- * Created by mariusz on 03.02.17.
+ * Common interface for all Views.
+ *
+ * @author Mariusz Baleczny
+ * @date 03.02.17
  */
 interface BaseView

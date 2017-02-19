@@ -19,7 +19,8 @@ import pl.mbaleczny.rapid_mg.util.USER_ID_ARG
 import javax.inject.Inject
 
 /**
- * Created by mariusz on 11.02.17.
+ * @author Mariusz Baleczny
+ * @date 11.02.17
  */
 class UserActivity : AppCompatActivity(), UserContract.View {
 

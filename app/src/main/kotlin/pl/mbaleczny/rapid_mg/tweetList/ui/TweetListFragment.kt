@@ -22,7 +22,8 @@ import pl.mbaleczny.rapid_mg.util.USER_ID_ARG
 
 
 /**
- * Created by mariusz on 04.02.17.
+ * @author Mariusz Baleczny
+ * @date 04.02.17
  */
 class TweetListFragment : Fragment(), TweetListContract.View {
 
@@ -104,6 +105,11 @@ class TweetListFragment : Fragment(), TweetListContract.View {
         activity.startActivity(i)
     }
 
+    /**
+     * Init [RecyclerView] with custom action on scroll for
+     * Android API levels below and above 23 (Marshmallow)
+     * as minSdkVersion is 15 (JellyBean).
+     */
     private fun initTweetList() {
         val layoutManager: LinearLayoutManager = LinearLayoutManager(context)
         tweetList?.layoutManager = layoutManager

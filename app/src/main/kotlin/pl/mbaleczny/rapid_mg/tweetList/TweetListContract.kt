@@ -6,7 +6,10 @@ import pl.mbaleczny.rapid_mg.util.base.BasePresenter
 import pl.mbaleczny.rapid_mg.util.base.BaseView
 
 /**
- * Created by mariusz on 03.02.17.
+ * Contract for TweetList Presenter and View.
+ *
+ * @author Mariusz Baleczny
+ * @date 03.02.17
  */
 interface TweetListContract {
 

@@ -14,7 +14,8 @@ import pl.mbaleczny.rapid_mg.tweetList.TweetListContract
 import pl.mbaleczny.rapid_mg.tweetList.ui.TweetListFragment
 
 /**
- * Created by mariusz on 04.02.17.
+ * @author Mariusz Baleczny
+ * @date 04.02.17
  */
 @PerActivity
 @Component(

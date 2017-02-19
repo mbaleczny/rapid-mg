@@ -6,7 +6,8 @@ import pl.mbaleczny.rapid_mg.util.schedulers.BaseSchedulerProvider
 import javax.inject.Singleton
 
 /**
- * Created by mariusz on 03.02.17.
+ * @author Mariusz Baleczny
+ * @date 03.02.17
  */
 @Singleton
 @Component(modules = arrayOf(AppModule::class, SchedulersModule::class))

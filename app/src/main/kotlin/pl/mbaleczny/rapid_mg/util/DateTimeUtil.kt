@@ -7,7 +7,8 @@ import org.joda.time.format.DateTimeFormatter
 import java.util.*
 
 /**
- * Created by mariusz on 06.02.17.
+ * @author Mariusz Baleczny
+ * @date 06.02.17
  */
 
 val TAG = "DateTimeUtil"

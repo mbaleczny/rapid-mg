@@ -5,7 +5,10 @@ import pl.mbaleczny.rapid_mg.util.base.BasePresenter
 import pl.mbaleczny.rapid_mg.util.base.BaseView
 
 /**
- * Created by mariusz on 11.02.17.
+ * Contract for User details Presenter and View.
+ *
+ * @author Mariusz Baleczny
+ * @date 11.02.17
  */
 interface UserContract {
 

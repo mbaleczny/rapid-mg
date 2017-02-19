@@ -8,7 +8,8 @@ import pl.mbaleczny.rapid_mg.util.schedulers.BaseSchedulerProvider
 import java.io.IOException
 
 /**
- * Created by mariusz on 16.02.17.
+ * @author Mariusz Baleczny
+ * @date 16.02.17
  */
 
 /**

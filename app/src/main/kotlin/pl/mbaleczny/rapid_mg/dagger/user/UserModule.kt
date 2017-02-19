@@ -9,7 +9,8 @@ import pl.mbaleczny.rapid_mg.user.UserContract
 import pl.mbaleczny.rapid_mg.user.UserPresenter
 
 /**
- * Created by mariusz on 11.02.17.
+ * @author Mariusz Baleczny
+ * @date 11.02.17
  */
 @Module
 class UserModule {

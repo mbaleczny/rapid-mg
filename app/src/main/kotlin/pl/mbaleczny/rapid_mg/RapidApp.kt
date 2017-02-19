@@ -13,7 +13,11 @@ import pl.mbaleczny.rapid_mg.dagger.AppModule
 import pl.mbaleczny.rapid_mg.dagger.DaggerAppComponent
 
 /**
- * Created by mariusz on 03.02.17.
+ * Top application class. Includes Fabric init with Twitter API
+ * credentials and Dagger top component.
+ *
+ * @author Mariusz Baleczny
+ * @date 03.02.17
  */
 open class RapidApp : Application() {
 
@@ -47,6 +51,9 @@ open class RapidApp : Application() {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
     }
 
+    /**
+     * Inits Fabric with Twitter credentials placed in gradle.properties file.
+     */
     private fun initFabric() {
         val authConfig = TwitterAuthConfig(BuildConfig.TWITTER_KEY, BuildConfig.TWITTER_SECRET)
         Fabric.with(this, Twitter(authConfig))

@@ -11,7 +11,8 @@ import pl.mbaleczny.rapid_mg.user.UserContract
 import pl.mbaleczny.rapid_mg.user.UserPresenter
 
 /**
- * Created by mariusz on 18.02.17.
+ * @author Mariusz Baleczny
+ * @date 18.02.17
  */
 class UserPresenterTest : BaseTweetListPresenterTest<UserContract.View, UserPresenter>() {
 

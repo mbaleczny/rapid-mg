@@ -7,7 +7,8 @@ import pl.mbaleczny.rapid_mg.data.TwitterDataSource
 import pl.mbaleczny.rapid_mg.network.RxTwitterService
 
 /**
- * Created by mariusz on 16.02.17.
+ * @author Mariusz Baleczny
+ * @date 16.02.17
  */
 class TwitterRemoteDataSource(val rxTwitterService: RxTwitterService) : TwitterDataSource {
 

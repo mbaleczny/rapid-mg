@@ -16,7 +16,8 @@ import pl.mbaleczny.rapid_mg.network.RxTwitterService
 import pl.mbaleczny.rapid_mg.util.schedulers.BaseSchedulerProvider
 
 /**
- * Created by mariusz on 09.02.17.
+ * @author Mariusz Baleczny
+ * @date 09.02.17
  */
 @Module
 class TwitterDataSourceModule {

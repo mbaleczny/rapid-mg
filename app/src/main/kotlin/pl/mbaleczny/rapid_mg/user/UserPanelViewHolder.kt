@@ -9,7 +9,11 @@ import pl.mbaleczny.rapid_mg.R
 import pl.mbaleczny.rapid_mg.RapidApp
 
 /**
- * Created by mariusz on 11.02.17.
+ * Binds received data about User into views that
+ * displays its details.
+ *
+ * @author Mariusz Baleczny
+ * @date 11.02.17
  */
 class UserPanelViewHolder(val activity: UserActivity) {
 

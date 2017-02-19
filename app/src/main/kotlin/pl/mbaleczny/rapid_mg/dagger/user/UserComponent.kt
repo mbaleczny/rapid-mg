@@ -6,7 +6,8 @@ import pl.mbaleczny.rapid_mg.dagger.tweetList.TweetListComponent
 import pl.mbaleczny.rapid_mg.user.UserActivity
 
 /**
- * Created by mariusz on 11.02.17.
+ * @author Mariusz Baleczny
+ * @date 11.02.17
  */
 @UserScope
 @Component(

@@ -13,7 +13,8 @@ import java.io.IOException
 import java.util.*
 
 /**
- * Created by mariusz on 08.02.17.
+ * @author Mariusz Baleczny
+ * @date 08.02.17
  */
 class FavoritesPresenterTest
     : BaseTweetListPresenterTest<TweetListContract.View, FavoritesPresenter>() {

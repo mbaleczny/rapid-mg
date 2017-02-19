@@ -12,7 +12,8 @@ import pl.mbaleczny.rapid_mg.tweetList.presenter.HomeTimelinePresenter
 import java.util.*
 
 /**
- * Created by mariusz on 08.02.17.
+ * @author Mariusz Baleczny
+ * @date 08.02.17
  */
 class HomeTimelinePresenterTest
     : BaseTweetListPresenterTest<TweetListContract.View, HomeTimelinePresenter>() {

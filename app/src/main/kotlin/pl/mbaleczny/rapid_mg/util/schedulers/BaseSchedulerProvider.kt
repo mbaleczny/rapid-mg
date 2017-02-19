@@ -4,7 +4,11 @@ import io.reactivex.Scheduler
 
 
 /**
- * Created by mariusz on 08.02.17.
+ * Common interface of class which provides
+ * Reactive Extensions' [Scheduler].
+ *
+ * @author Mariusz Baleczny
+ * @date 08.02.17
  */
 interface BaseSchedulerProvider {
 

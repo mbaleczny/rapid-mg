@@ -6,7 +6,8 @@ import android.support.v7.app.AppCompatActivity
 import pl.mbaleczny.rapid_mg.R
 
 /**
- * Created by mariusz on 04.02.17.
+ * @author Mariusz Baleczny
+ * @date 04.02.17
  */
 
 val USER_ID_ARG = "user_id"

@@ -6,7 +6,8 @@ import com.twitter.sdk.android.core.models.Tweet
 import pl.mbaleczny.rapid_mg.data.source.local.TweetsDbContract
 
 /**
- * Created by mariusz on 15.02.17.
+ * @author Mariusz Baleczny
+ * @date 15.02.17
  */
 
 fun Cursor.toTweet(gson: Gson): Tweet {

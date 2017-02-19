@@ -12,7 +12,13 @@ import pl.mbaleczny.rapid_mg.util.parseDateTime
 import java.util.*
 
 /**
- * Created by mariusz on 09.02.17.
+ * Base class for presenters which handles [view]
+ * actions and passes to them data from [dataSource].
+ *
+ * @param [dataSource] source of tweets
+ *
+ * @author Mariusz Baleczny
+ * @date 09.02.17
  */
 abstract class BaseTweetListPresenter(val dataSource: TwitterDataSource)
     : TweetListContract.Presenter {

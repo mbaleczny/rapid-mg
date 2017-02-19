@@ -6,7 +6,12 @@ import io.reactivex.Observable
 import retrofit2.http.*
 
 /**
- * Created by mariusz on 08.02.17.
+ * Retrofit service which compacts useful methods
+ * from original Twitter Services like StatusesService
+ * and FavoriteService.
+ *
+ * @author Mariusz Baleczny
+ * @date 08.02.17
  */
 interface RxTwitterService {
 

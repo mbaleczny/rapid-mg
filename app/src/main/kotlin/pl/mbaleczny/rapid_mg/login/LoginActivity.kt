@@ -11,7 +11,8 @@ import pl.mbaleczny.rapid_mg.dagger.login.LoginModule
 import pl.mbaleczny.rapid_mg.util.showFragment
 
 /**
- * Created by mariusz on 04.02.17.
+ * @author Mariusz Baleczny
+ * @date 04.02.17
  */
 class LoginActivity : AppCompatActivity() {
 

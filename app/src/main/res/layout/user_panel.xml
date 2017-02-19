@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/user_panel_banner_height"
         android:layout_alignParentTop="true"
-        tools:src="#AACCAA"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        tools:src="#AACCAA" />
 
     <ImageView
         android:id="@+id/user_panel_avatar"

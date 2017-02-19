@@ -18,7 +18,10 @@ import pl.mbaleczny.rapid_mg.util.transformTweetDateTime
 
 
 /**
- * Created by mariusz on 05.02.17.
+ * Converts list of Tweets (data) to views to display.
+ *
+ * @author Mariusz Baleczny
+ * @date 05.02.17
  */
 class TweetsRecyclerAdapter(val context: Context)
     : RecyclerView.Adapter<TweetsRecyclerAdapter.ViewHolder>() {
@@ -93,6 +96,9 @@ class TweetsRecyclerAdapter(val context: Context)
         }
     }
 
+    /**
+     * Interface of listener for Tweet actions.
+     */
     interface onTweetAction {
         fun onLike(tweet: Tweet)
         fun onUnlike(tweet: Tweet)

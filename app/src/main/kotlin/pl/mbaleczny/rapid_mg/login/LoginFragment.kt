@@ -15,7 +15,8 @@ import pl.mbaleczny.rapid_mg.tweetList.ui.TweetListActivity
 import javax.inject.Inject
 
 /**
- * Created by mariusz on 03.02.17.
+ * @author Mariusz Baleczny
+ * @date 03.02.17
  */
 class LoginFragment : Fragment(), LoginContract.View {
 

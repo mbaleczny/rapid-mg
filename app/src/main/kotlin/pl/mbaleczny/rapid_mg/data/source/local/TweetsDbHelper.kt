@@ -13,7 +13,8 @@ import pl.mbaleczny.rapid_mg.util.TweetUtils
 import pl.mbaleczny.rapid_mg.util.toTweet
 
 /**
- * Created by mariusz on 14.02.17.
+ * @author Mariusz Baleczny
+ * @date 14.02.17
  */
 class TweetsDbHelper(context: Context, val gson: Gson)
     : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {

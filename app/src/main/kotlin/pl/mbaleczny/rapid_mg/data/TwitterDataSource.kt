@@ -5,7 +5,10 @@ import com.twitter.sdk.android.core.models.User
 import io.reactivex.Observable
 
 /**
- * Created by mariusz on 09.02.17.
+ * Contract for data source implementations.
+ *
+ * @author Mariusz Baleczny
+ * @date 09.02.17
  */
 interface TwitterDataSource {
 

@@ -8,7 +8,8 @@ import pl.mbaleczny.rapid_mg.network.CustomTwitterApiClient
 import pl.mbaleczny.rapid_mg.network.RxTwitterService
 
 /**
- * Created by mariusz on 04.02.17.
+ * @author Mariusz Baleczny
+ * @date 04.02.17
  */
 @Module
 class NetworkModule {

@@ -12,7 +12,8 @@ import pl.mbaleczny.rapid_mg.util.schedulers.BaseSchedulerProvider
  * Manages data sources, ie. remote and local and applies
  * RxJava schedulers.
  *
- * Created by mariusz on 09.02.17.
+ * @author Mariusz Baleczny
+ * @date 09.02.17
  */
 class TwitterRepo(
         remoteDataSource: TwitterDataSource,

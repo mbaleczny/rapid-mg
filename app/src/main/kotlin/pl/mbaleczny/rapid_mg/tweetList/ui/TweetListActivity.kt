@@ -22,7 +22,10 @@ import pl.mbaleczny.rapid_mg.dagger.tweetList.TweetListModule
 import pl.mbaleczny.rapid_mg.login.LoginActivity
 import pl.mbaleczny.rapid_mg.tweetList.adapter.TweetListPagerAdapter
 
-
+/**
+ * @author Mariusz Baleczny
+ * @date 10.02.17
+ */
 class TweetListActivity : AppCompatActivity() {
 
     companion object {
@@ -53,6 +56,14 @@ class TweetListActivity : AppCompatActivity() {
         viewPager.clearOnPageChangeListeners()
     }
 
+    /**
+     * Handles action on back press action with custom behaviour.
+     * For the first time displays a Toast with message
+     * "Press back again to leaven" and holds that state
+     * for time defined in [ON_BACK_PRESS_TIMEOUT]. During that
+     * time another [onBackPressed] invocation will cause leaving the app.
+     * After that period of time, [onBackPressed] action is reset.
+     */
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount != 0 || pressAgainToExit) {
             super.onBackPressed()
