@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import com.twitter.sdk.android.core.models.Tweet
@@ -41,7 +42,8 @@ class TweetListFragment : Fragment(), TweetListContract.View {
     lateinit var presenter: TweetListContract.Presenter
 
     private var tweetList: RecyclerView? = null
-    private var emptyLabel: TextView? = null
+    private var listLabel: TextView? = null
+    private var progressLabel: ProgressBar? = null
     private var swipeRefresh: SwipeRefreshLayout? = null
 
     private var adapter: TweetsRecyclerAdapter? = null
@@ -56,7 +58,8 @@ class TweetListFragment : Fragment(), TweetListContract.View {
                               savedInstanceState: Bundle?): View? {
         val v = inflater?.inflate(R.layout.fragment_tweet_list, container, false)
         tweetList = v?.findViewById(R.id.fragment_tweet_list_recycler_view) as RecyclerView
-        emptyLabel = v?.findViewById(R.id.empty_list_label) as TextView
+        listLabel = v?.findViewById(R.id.list_label) as TextView
+        progressLabel = v?.findViewById(R.id.label_progress_bar) as ProgressBar
         adapter = TweetsRecyclerAdapter(context, presenter)
 
         initTweetList()
@@ -92,7 +95,12 @@ class TweetListFragment : Fragment(), TweetListContract.View {
 
     override fun hideProgress() {
         swipeRefresh?.isRefreshing = false
-        emptyLabel?.visibility = if (adapter?.isEmpty() as Boolean) View.VISIBLE else View.GONE
+        if (adapter?.isEmpty() as Boolean) {
+            listLabel?.setText(R.string.no_tweets)
+        } else {
+            listLabel?.visibility = View.GONE
+        }
+        progressLabel?.visibility = View.GONE
     }
 
     override fun showMessage(s: String) {
