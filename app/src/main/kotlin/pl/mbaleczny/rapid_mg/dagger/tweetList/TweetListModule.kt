@@ -30,16 +30,21 @@ class TweetListModule {
 
     @Provides
     @FavoritesPresenterType
-    fun provideFavoritesPresenter(@TwitterRepoDataSource twitterDataSource: TwitterDataSource)
+    fun provideFavoritesPresenter(@TwitterRepoDataSource twitterDataSource: TwitterDataSource,
+                                  twitterCore: TwitterCore)
             : TweetListContract.Presenter =
             FavoritesPresenter(
                     twitterDataSource,
-                    TwitterCore.getInstance().sessionManager.activeSession.userId)
+                    twitterCore.sessionManager.activeSession.userId)
 
     @Provides
     @UserTimelinePresenterType
     fun provideUserTimelinePresenter(@TwitterRepoDataSource twitterDataSource: TwitterDataSource)
             : TweetListContract.Presenter
             = UserTimelinePresenter(twitterDataSource)
+
+    @Provides
+    @PerActivity
+    fun provideTWitterCore(): TwitterCore = TwitterCore.getInstance()
 
 }

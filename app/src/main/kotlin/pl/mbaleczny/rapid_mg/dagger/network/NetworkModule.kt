@@ -1,6 +1,6 @@
 package pl.mbaleczny.rapid_mg.dagger.network
 
-import com.twitter.sdk.android.Twitter
+import com.twitter.sdk.android.core.TwitterCore
 import dagger.Module
 import dagger.Provides
 import pl.mbaleczny.rapid_mg.dagger.scope.PerActivity
@@ -16,8 +16,8 @@ class NetworkModule {
 
     @Provides
     @PerActivity
-    fun twitterApiClient(): CustomTwitterApiClient
-            = CustomTwitterApiClient(Twitter.getSessionManager().activeSession)
+    fun twitterApiClient(twitterCore: TwitterCore): CustomTwitterApiClient
+            = CustomTwitterApiClient(twitterCore)
 
     @Provides
     @PerActivity

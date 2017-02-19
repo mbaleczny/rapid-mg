@@ -25,8 +25,10 @@ import java.util.concurrent.ConcurrentHashMap
  * @author Mariusz Baleczny
  * @date 08.02.17
  */
-class CustomTwitterApiClient(session: TwitterSession) : TwitterApiClient(session) {
+class CustomTwitterApiClient(val twitterCore: TwitterCore)
+    : TwitterApiClient(twitterCore.sessionManager.activeSession) {
 
+    internal val session: TwitterSession = twitterCore.sessionManager.activeSession
     internal val services: ConcurrentHashMap<Class<*>, Any>
     internal val retrofit: Retrofit
 
@@ -34,15 +36,15 @@ class CustomTwitterApiClient(session: TwitterSession) : TwitterApiClient(session
         this.services = ConcurrentHashMap()
         val client = buildHttpClient(session)
         this.retrofit = buildRetrofit(client, TwitterApi())
-        TwitterCore.getInstance().addApiClient(session, this)
+        twitterCore.addApiClient(session, this)
     }
 
     private fun buildHttpClient(session: TwitterSession): OkHttpClient {
         val loggingInterceptor: HttpLoggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BASIC
         return getOkHttpClientBuilder(session,
-                TwitterCore.getInstance().authConfig,
-                TwitterCore.getInstance().sslSocketFactory)
+                twitterCore.authConfig,
+                twitterCore.sslSocketFactory)
                 .addInterceptor(loggingInterceptor)
                 .build()
     }

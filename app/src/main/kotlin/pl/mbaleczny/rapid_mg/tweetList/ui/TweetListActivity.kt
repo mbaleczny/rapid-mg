@@ -15,12 +15,11 @@ import org.jetbrains.anko.alert
 import org.jetbrains.anko.toast
 import pl.mbaleczny.rapid_mg.R
 import pl.mbaleczny.rapid_mg.RapidApp
-import pl.mbaleczny.rapid_mg.dagger.network.NetworkModule
 import pl.mbaleczny.rapid_mg.dagger.tweetList.DaggerTweetListComponent
 import pl.mbaleczny.rapid_mg.dagger.tweetList.TweetListComponent
-import pl.mbaleczny.rapid_mg.dagger.tweetList.TweetListModule
 import pl.mbaleczny.rapid_mg.login.LoginActivity
 import pl.mbaleczny.rapid_mg.tweetList.adapter.TweetListPagerAdapter
+import javax.inject.Inject
 
 /**
  * @author Mariusz Baleczny
@@ -33,12 +32,16 @@ class TweetListActivity : AppCompatActivity() {
         var tweetListComponent: TweetListComponent? = null
     }
 
+    @Inject
+    lateinit var twitterCore: TwitterCore
+
     private var pagerAdapter: TweetListPagerAdapter? = null
     private var pressAgainToExit: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tweet_list)
+        initTweetListComponent()
         initToolbar()
         initTabLayout()
 
@@ -94,7 +97,7 @@ class TweetListActivity : AppCompatActivity() {
     }
 
     private fun logout() {
-        TwitterCore.getInstance().logOut()
+        twitterCore.logOut()
         val i = Intent(this, LoginActivity::class.java)
         Intent.makeRestartActivityTask(i.component)
         finish()
@@ -109,13 +112,12 @@ class TweetListActivity : AppCompatActivity() {
         viewPager.addOnPageChangeListener(pageChangeListener)
     }
 
-    private fun initNewsComponent() {
+    private fun initTweetListComponent() {
         if (tweetListComponent == null)
             tweetListComponent = DaggerTweetListComponent.builder()
                     .appComponent(RapidApp.appComponent)
-                    .tweetListModule(TweetListModule())
-                    .networkModule(NetworkModule())
                     .build()
+        tweetListComponent?.inject(this)
     }
 
     private fun initToolbar() {
@@ -124,9 +126,7 @@ class TweetListActivity : AppCompatActivity() {
     }
 
     private fun goToUserMainScreen() {
-        initNewsComponent()
-
-        val userId = TwitterCore.getInstance().sessionManager.activeSession.userId
+        val userId = twitterCore.sessionManager.activeSession.userId
 
         val tweetListFragment = TweetListFragment.newInstance(userId,
                 tweetListComponent?.tweetTimelinePresenter()!!)
