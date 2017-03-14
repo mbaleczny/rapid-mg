@@ -52,7 +52,7 @@ class LoginFragment : Fragment(), LoginContract.View {
 
     override fun onFailedLogin(exception: TwitterException?) {
         Log.e(javaClass.simpleName, exception?.message as String)
-        showToast(exception?.message as String)
+        showToast(exception.message as String)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

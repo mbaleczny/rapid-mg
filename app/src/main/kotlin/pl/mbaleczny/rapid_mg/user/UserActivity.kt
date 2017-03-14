@@ -106,16 +106,16 @@ class UserActivity : AppCompatActivity(), UserContract.View {
 
     private fun injectDependencies() {
         DaggerUserComponent.builder()
-                .tweetListComponent(TweetListActivity.tweetListComponent)
+                .tweetListComponent(TweetListActivity.component)
                 .userModule(UserModule())
                 .build().inject(this)
     }
 
     private fun addTweetListTabs(userId: Long) {
         val tweetListFragment = TweetListFragment.newInstance(userId,
-                TweetListActivity.tweetListComponent?.userTimelinePresenter()!!)
+                TweetListActivity.component?.userTimelinePresenter()!!)
         val favoritesFragment = TweetListFragment.newInstance(userId,
-                TweetListActivity.tweetListComponent?.favoritesPresenter()!!)
+                TweetListActivity.component?.favoritesPresenter()!!)
 
         addScreen(tweetListFragment)
         addScreen(favoritesFragment)

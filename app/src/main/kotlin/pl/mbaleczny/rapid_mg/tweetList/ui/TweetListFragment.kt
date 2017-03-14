@@ -58,13 +58,13 @@ class TweetListFragment : Fragment(), TweetListContract.View {
                               savedInstanceState: Bundle?): View? {
         val v = inflater?.inflate(R.layout.fragment_tweet_list, container, false)
         tweetList = v?.findViewById(R.id.fragment_tweet_list_recycler_view) as RecyclerView
-        listLabel = v?.findViewById(R.id.list_label) as TextView
-        progressLabel = v?.findViewById(R.id.label_progress_bar) as ProgressBar
+        listLabel = v.findViewById(R.id.list_label) as TextView
+        progressLabel = v.findViewById(R.id.label_progress_bar) as ProgressBar
         adapter = TweetsRecyclerAdapter(context, presenter)
 
         initTweetList()
 
-        swipeRefresh = v?.findViewById(R.id.swipeRefreshLayout) as SwipeRefreshLayout
+        swipeRefresh = v.findViewById(R.id.swipeRefreshLayout) as SwipeRefreshLayout
         swipeRefresh?.setOnRefreshListener { presenter.loadFreshList() }
 
         presenter.bindView(this)
@@ -118,6 +118,7 @@ class TweetListFragment : Fragment(), TweetListContract.View {
      * Android API levels below and above 23 (Marshmallow)
      * as minSdkVersion is 15 (JellyBean).
      */
+    @Suppress("DEPRECATION")
     private fun initTweetList() {
         val layoutManager: LinearLayoutManager = LinearLayoutManager(context)
         tweetList?.layoutManager = layoutManager

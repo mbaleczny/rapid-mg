@@ -33,9 +33,7 @@ abstract class BaseTweetListPresenterTest<V : BaseView, T : BasePresenter<V>> {
 
     @Before
     open fun setUp() {
-        repo = TwitterRepo(remoteDataSource,
-                localDataSource,
-                schedulerProvider)
+        repo = TwitterRepo(remoteDataSource, localDataSource, schedulerProvider)
 
         mockSchedulers()
         mockNetworkAvailabilityCheck(true)

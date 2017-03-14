@@ -15,11 +15,12 @@ val TAG = "DateTimeUtil"
 private val input_date_time_formatter_pattern = "EEE MMM dd HH:mm:ss Z yyyy"
 private val output_date_time_formatter_pattern = "dd/MM/yyyy HH:mm:ss"
 
-private val formatter: DateTimeFormatter = DateTimeFormat.forPattern(input_date_time_formatter_pattern)
+val dateTimeFormatter: DateTimeFormatter
+        = DateTimeFormat.forPattern(input_date_time_formatter_pattern)
 
 fun transformTweetDateTime(input: String): String {
     try {
-        val dateTime = DateTime.parse(input, formatter.withLocale(Locale.UK))
+        val dateTime = DateTime.parse(input, dateTimeFormatter.withLocale(Locale.UK))
         return DateTimeFormat.forPattern(output_date_time_formatter_pattern).print(dateTime)
     } catch (e: IllegalArgumentException) {
         when (e) {
@@ -39,7 +40,7 @@ fun transformTweetDateTime(input: String): String {
 fun parseDateTime(input: String?): DateTime? {
     if (input.isNullOrEmpty()) return null
     try {
-        return DateTime.parse(input, formatter.withLocale(Locale.UK))
+        return DateTime.parse(input, dateTimeFormatter.withLocale(Locale.UK))
     } catch (e: Exception) {
         when (e) {
             is IllegalArgumentException,
