@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'org.jetbrains.dokka-android'
+//apply plugin: 'org.jetbrains.dokka-android'
 
 android {
     compileSdkVersion 25
@@ -28,6 +28,24 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
         androidTest.java.srcDirs += 'src/androidTest/kotlin'
         test.java.srcDirs += 'src/test/kotlin'
+        mock.java.srcDirs += 'src/mock/kotlin'
+        test.java.srcDirs += 'src/mockTest/kotlin'
+        prod.java.srcDirs += 'src/prod/kotlin'
+    }
+    productFlavors {
+        mock {
+            applicationIdSuffix = ".mock"
+            minSdkVersion 21
+        }
+        prod {
+
+        }
+    }
+    android.variantFilter { variant ->
+        if (variant.buildType.name == 'release' &&
+                variant.getFlavors().get(0).name == 'mock') {
+            variant.setIgnore(true);
+        }
     }
     lintOptions {
         abortOnError false
@@ -48,8 +66,9 @@ afterEvaluate {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:25.1.1'
-    compile 'com.android.support:design:25.1.1'
+    compile("com.android.support:design:25.1.1") {
+        exclude module: 'recyclerview-v7'
+    }
     compile 'com.android.support:recyclerview-v7:25.1.1'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
@@ -59,15 +78,31 @@ dependencies {
 
     compile('com.twitter.sdk.android:twitter:2.3.1@aar') {
         transitive = true;
+        exclude module: 'picasso'
+        exclude module: 'gson'
+        exclude module: 'retrofit'
+        exclude module: 'okhttp'
+        exclude module: 'support-v4'
+        exclude module: 'rxjava'
+        exclude module: 'converter-gson'
     }
 
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile("io.reactivex.rxjava2:rxandroid:2.0.1") {
+        exclude module: 'rxjava'
+    }
     compile 'io.reactivex.rxjava2:rxjava:2.0.5'
 
-    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+    compile("com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0") {
+        exclude module: 'rxjava'
+        exclude module: 'okhttp'
+    }
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+    compile("com.squareup.retrofit2:converter-gson:2.1.0") {
+        exclude module: 'retrofit'
+    }
+    compile('com.squareup.okhttp3:logging-interceptor:3.3.1') {
+        exclude group: 'okhttp'
+    }
 
     compile 'joda-time:joda-time:2.9.7'
     compile 'com.squareup.picasso:picasso:2.5.2'
@@ -78,10 +113,18 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
 
-    testCompile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.6'
-    testCompile 'org.jetbrains.kotlin:kotlin-test-junit:1.0.6'
-    testCompile "com.nhaarman:mockito-kotlin:1.1.0"
-    testCompile 'org.amshove.kluent:kluent:1.14'
+    testCompile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    testCompile("com.nhaarman:mockito-kotlin:1.1.0") {
+        exclude group: 'kotlin-stdlib'
+    }
+    testCompile("org.amshove.kluent:kluent:1.14") {
+        exclude group: 'junit'
+        exclude group: 'mockito-core'
+    }
+
+    testCompile 'org.mockito:mockito-core:2.6.3'
+    androidTestCompile 'org.mockito:mockito-android:2.6.3'
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -92,13 +135,13 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
-dokka {
-    includes = ['README.md']
-
-    linkMapping {
-        dir = "src/main/kotlin"
-        url = "https://github.com/mbaleczny/rapid-mg/tree/master/app/src/main/kotlin"
-        suffix = "#L"
-    }
-    sourceDirs = files('src/main/kotlin')
-}
+//dokka {
+//    includes = ['README.md']
+//
+//    linkMapping {
+//        dir = "src/main/kotlin"
+//        url = "https://github.com/mbaleczny/rapid-mg/tree/master/app/src/main/kotlin"
+//        suffix = "#L"
+//    }
+//    sourceDirs = files('src/main/kotlin')
+//}
