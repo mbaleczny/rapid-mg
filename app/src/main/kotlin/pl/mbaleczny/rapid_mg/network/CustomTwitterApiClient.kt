@@ -4,7 +4,6 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.twitter.sdk.android.core.TwitterApiClient
-import com.twitter.sdk.android.core.TwitterCore
 import com.twitter.sdk.android.core.TwitterSession
 import com.twitter.sdk.android.core.internal.TwitterApi
 import com.twitter.sdk.android.core.internal.network.OkHttpClientHelper.getOkHttpClientBuilder
@@ -25,26 +24,25 @@ import java.util.concurrent.ConcurrentHashMap
  * @author Mariusz Baleczny
  * @date 08.02.17
  */
-class CustomTwitterApiClient(val twitterCore: TwitterCore)
-    : TwitterApiClient(twitterCore.sessionManager.activeSession) {
+class CustomTwitterApiClient(val twitterProvider: TwitterProvider)
+    : TwitterApiClient(twitterProvider.session()) {
 
-    internal val session: TwitterSession = twitterCore.sessionManager.activeSession
-    internal val services: ConcurrentHashMap<Class<*>, Any>
+    internal val session: TwitterSession = twitterProvider.session()!!
+    internal val services: ConcurrentHashMap<Class<*>, Any> = ConcurrentHashMap()
     internal val retrofit: Retrofit
 
     init {
-        this.services = ConcurrentHashMap()
         val client = buildHttpClient(session)
         this.retrofit = buildRetrofit(client, TwitterApi())
-        twitterCore.addApiClient(session, this)
+        twitterProvider.addApiClient(session, this)
     }
 
     private fun buildHttpClient(session: TwitterSession): OkHttpClient {
         val loggingInterceptor: HttpLoggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BASIC
         return getOkHttpClientBuilder(session,
-                twitterCore.authConfig,
-                twitterCore.sslSocketFactory)
+                twitterProvider.authConfig(),
+                twitterProvider.sslSocketFactory())
                 .addInterceptor(loggingInterceptor)
                 .build()
     }
@@ -66,10 +64,9 @@ class CustomTwitterApiClient(val twitterCore: TwitterCore)
                 .create()
     }
 
-    fun <T> getCustomService(cls: Class<T>): T {
-        if (!services.contains(cls)) {
-            (services).putIfAbsent(cls, retrofit.create(cls))
-        }
+    @Suppress("UNCHECKED_CAST")
+    fun <T> getCustomService(cls: Class<T>): T? {
+        services.putIfAbsent(cls, retrofit.create(cls) as Any)
         return services[cls] as T
     }
 

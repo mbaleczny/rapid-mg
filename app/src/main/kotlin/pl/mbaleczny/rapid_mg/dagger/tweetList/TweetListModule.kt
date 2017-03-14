@@ -1,6 +1,5 @@
 package pl.mbaleczny.rapid_mg.dagger.tweetList
 
-import com.twitter.sdk.android.core.TwitterCore
 import dagger.Module
 import dagger.Provides
 import pl.mbaleczny.rapid_mg.dagger.data.qualifier.TwitterRepoDataSource
@@ -9,6 +8,7 @@ import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.FavoritesPresenterType
 import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.NewsPresenterType
 import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.UserTimelinePresenterType
 import pl.mbaleczny.rapid_mg.data.TwitterDataSource
+import pl.mbaleczny.rapid_mg.network.TwitterProvider
 import pl.mbaleczny.rapid_mg.tweetList.TweetListContract
 import pl.mbaleczny.rapid_mg.tweetList.presenter.FavoritesPresenter
 import pl.mbaleczny.rapid_mg.tweetList.presenter.HomeTimelinePresenter
@@ -31,20 +31,16 @@ class TweetListModule {
     @Provides
     @FavoritesPresenterType
     fun provideFavoritesPresenter(@TwitterRepoDataSource twitterDataSource: TwitterDataSource,
-                                  twitterCore: TwitterCore)
+                                  twitterProvider: TwitterProvider)
             : TweetListContract.Presenter =
             FavoritesPresenter(
                     twitterDataSource,
-                    twitterCore.sessionManager.activeSession.userId)
+                    twitterProvider.session()?.userId)
 
     @Provides
     @UserTimelinePresenterType
     fun provideUserTimelinePresenter(@TwitterRepoDataSource twitterDataSource: TwitterDataSource)
             : TweetListContract.Presenter
             = UserTimelinePresenter(twitterDataSource)
-
-    @Provides
-    @PerActivity
-    fun provideTWitterCore(): TwitterCore = TwitterCore.getInstance()
 
 }

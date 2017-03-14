@@ -1,6 +1,8 @@
 package pl.mbaleczny.rapid_mg.dagger
 
 import dagger.Component
+import pl.mbaleczny.rapid_mg.MainActivity
+import pl.mbaleczny.rapid_mg.network.TwitterProvider
 import pl.mbaleczny.rapid_mg.util.schedulers.BaseSchedulerProvider
 import javax.inject.Singleton
 
@@ -13,5 +15,9 @@ import javax.inject.Singleton
 interface AppComponent {
 
     fun schedulerProvider(): BaseSchedulerProvider
+
+    fun inject(mainActivity: MainActivity)
+
+    fun twitterProvider(): TwitterProvider
 
 }

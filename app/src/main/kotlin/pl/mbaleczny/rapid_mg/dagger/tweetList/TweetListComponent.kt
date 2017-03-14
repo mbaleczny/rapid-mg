@@ -1,6 +1,5 @@
 package pl.mbaleczny.rapid_mg.dagger.tweetList
 
-import com.twitter.sdk.android.core.TwitterCore
 import dagger.Component
 import pl.mbaleczny.rapid_mg.dagger.AppComponent
 import pl.mbaleczny.rapid_mg.dagger.data.TwitterDataSourceModule
@@ -11,6 +10,7 @@ import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.FavoritesPresenterType
 import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.NewsPresenterType
 import pl.mbaleczny.rapid_mg.dagger.tweetList.qualifier.UserTimelinePresenterType
 import pl.mbaleczny.rapid_mg.data.TwitterDataSource
+import pl.mbaleczny.rapid_mg.network.TwitterProvider
 import pl.mbaleczny.rapid_mg.tweetList.TweetListContract
 import pl.mbaleczny.rapid_mg.tweetList.ui.TweetListActivity
 import pl.mbaleczny.rapid_mg.tweetList.ui.TweetListFragment
@@ -31,7 +31,7 @@ interface TweetListComponent {
 
     fun inject(fragment: TweetListFragment)
 
-    fun twitterCore(): TwitterCore
+    fun twitterProvider(): TwitterProvider
 
     @FavoritesPresenterType fun favoritesPresenter(): TweetListContract.Presenter
 

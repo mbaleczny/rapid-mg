@@ -3,9 +3,10 @@ package pl.mbaleczny.rapid_mg
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.twitter.sdk.android.core.TwitterCore
 import pl.mbaleczny.rapid_mg.login.LoginActivity
+import pl.mbaleczny.rapid_mg.network.TwitterProvider
 import pl.mbaleczny.rapid_mg.tweetList.ui.TweetListActivity
+import javax.inject.Inject
 
 /**
  * Launcher Activity.
@@ -15,8 +16,12 @@ import pl.mbaleczny.rapid_mg.tweetList.ui.TweetListActivity
  */
 class MainActivity : AppCompatActivity() {
 
+    @Inject
+    lateinit var twitterProvider: TwitterProvider
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        RapidApp.appComponent.inject(this)
         finish()
         startActivity(getRedirectIntent())
     }
@@ -26,7 +31,7 @@ class MainActivity : AppCompatActivity() {
      * returns suitable Intent to invoke.
      */
     private fun getRedirectIntent(): Intent? {
-        return when (TwitterCore.getInstance()?.sessionManager?.activeSession) {
+        return when (twitterProvider.session()) {
             null -> Intent(this, LoginActivity::class.java)
             else -> Intent(this, TweetListActivity::class.java)
         }

@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import com.twitter.sdk.android.core.TwitterCore
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_tweet_list.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.toast
@@ -18,6 +18,7 @@ import pl.mbaleczny.rapid_mg.RapidApp
 import pl.mbaleczny.rapid_mg.dagger.tweetList.DaggerTweetListComponent
 import pl.mbaleczny.rapid_mg.dagger.tweetList.TweetListComponent
 import pl.mbaleczny.rapid_mg.login.LoginActivity
+import pl.mbaleczny.rapid_mg.network.TwitterProvider
 import pl.mbaleczny.rapid_mg.tweetList.adapter.TweetListPagerAdapter
 import javax.inject.Inject
 
@@ -29,11 +30,11 @@ class TweetListActivity : AppCompatActivity() {
 
     companion object {
         private const val ON_BACK_PRESS_TIMEOUT: Long = 2000
-        var tweetListComponent: TweetListComponent? = null
+        var component: TweetListComponent? = null
     }
 
     @Inject
-    lateinit var twitterCore: TwitterCore
+    lateinit var twitterProvider: TwitterProvider
 
     private var pagerAdapter: TweetListPagerAdapter? = null
     private var pressAgainToExit: Boolean = false
@@ -87,7 +88,7 @@ class TweetListActivity : AppCompatActivity() {
     private fun setupMenu(menu: Menu?) {
         menuInflater.inflate(R.menu.tweet_list_activity_menu, menu)
         val logoutItem: MenuItem? = menu?.findItem(R.id.action_logout)
-        logoutItem?.setOnMenuItemClickListener { item ->
+        logoutItem?.setOnMenuItemClickListener {
             alert(R.string.logout_alert_message) {
                 positiveButton(R.string.yes) { logout() }
                 negativeButton(R.string.no) { }
@@ -97,7 +98,7 @@ class TweetListActivity : AppCompatActivity() {
     }
 
     private fun logout() {
-        twitterCore.logOut()
+        twitterProvider.logout()
         val i = Intent(this, LoginActivity::class.java)
         Intent.makeRestartActivityTask(i.component)
         finish()
@@ -113,11 +114,11 @@ class TweetListActivity : AppCompatActivity() {
     }
 
     private fun initTweetListComponent() {
-        if (tweetListComponent == null)
-            tweetListComponent = DaggerTweetListComponent.builder()
+        if (component == null)
+            component = DaggerTweetListComponent.builder()
                     .appComponent(RapidApp.appComponent)
                     .build()
-        tweetListComponent?.inject(this)
+        component?.inject(this)
     }
 
     private fun initToolbar() {
@@ -126,18 +127,17 @@ class TweetListActivity : AppCompatActivity() {
     }
 
     private fun goToUserMainScreen() {
-        val userId = twitterCore.sessionManager.activeSession.userId
+        val userId = twitterProvider.session()?.userId
 
-        val tweetListFragment = TweetListFragment.newInstance(userId,
-                tweetListComponent?.tweetTimelinePresenter()!!)
-        val favoritesFragment = TweetListFragment.newInstance(userId,
-                tweetListComponent?.favoritesPresenter()!!)
+        if (userId != null) {
+            addScreen(TweetListFragment.newInstance(userId, component?.tweetTimelinePresenter()!!))
+            addScreen(TweetListFragment.newInstance(userId, component?.favoritesPresenter()!!))
 
-        addScreen(tweetListFragment)
-        addScreen(favoritesFragment)
-
-        tabLayout.getTabAt(0)?.setIcon(R.drawable.ic_home)
-        tabLayout.getTabAt(1)?.setIcon(R.drawable.ic_favorite)
+            tabLayout.getTabAt(0)?.setIcon(R.drawable.ic_home)
+            tabLayout.getTabAt(1)?.setIcon(R.drawable.ic_favorite)
+        } else {
+            Toast.makeText(this, R.string.twitter_session_error_message, Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun addScreen(fragment: TweetListFragment) {

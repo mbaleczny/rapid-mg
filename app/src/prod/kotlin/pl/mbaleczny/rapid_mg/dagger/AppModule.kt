@@ -3,6 +3,8 @@ package pl.mbaleczny.rapid_mg.dagger
 import dagger.Module
 import dagger.Provides
 import pl.mbaleczny.rapid_mg.RapidApp
+import pl.mbaleczny.rapid_mg.network.ProdTwitterProvider
+import pl.mbaleczny.rapid_mg.network.TwitterProvider
 import javax.inject.Singleton
 
 /**
@@ -15,5 +17,9 @@ class AppModule(private var application: RapidApp) {
     @Provides
     @Singleton
     fun provideRapidApp(): RapidApp = application
+
+    @Provides
+    @Singleton
+    fun provideTwitterProvider(): TwitterProvider = ProdTwitterProvider()
 
 }
