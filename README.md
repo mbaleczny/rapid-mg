@@ -1,6 +1,6 @@
-# Rapid-mg
+# Rapid-mg [![Build Status](https://travis-ci.org/mbaleczny/rapid-mg.svg?branch=master)](https://travis-ci.org/mbaleczny/rapid-mg)
 
-Twitter client clone Application based on MVP architecture. Written in Kotlin v1.0.6.
+Twitter client clone Application based on MVP architecture. Written in Kotlin v1.1.1.
 Use example of Twitter SDK with custom TwitterApiClient.
 
 License
