@@ -1,3 +1,4 @@
+sudo: false
 language: android
 android:
   components:
@@ -10,11 +11,16 @@ android:
     - android-22
     - android-25
 
-    - sys-img-armeabi-v7a-android-16
-    - sys-img-armeabi-v7a-android-21
     - sys-img-armeabi-v7a-android-22
     - sys-img-armeabi-v7a-android-25
 jdk:
   - oraclejdk8
 os:
-  - linuxK
+  - linux
+before_script:
+  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
+  - emulator -avd test -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+script:
+  - ./gradlew build connectedCheck
