@@ -1,4 +1,4 @@
-# Rapid-mg [![Build Status](https://travis-ci.org/mbaleczny/rapid-mg.svg?branch=master)](https://travis-ci.org/mbaleczny/rapid-mg)
+# Rapid-mg [![Build Status](https://travis-ci.org/mbaleczny/rapid-mg.svg?branch=master)](https://travis-ci.org/mbaleczny/rapid-mg) [![codebeat badge](https://codebeat.co/badges/d6f122e8-f49f-4e14-8f79-821fa1da00ff)](https://codebeat.co/projects/github-com-mbaleczny-rapid-mg-master)
 
 Twitter client clone Application based on MVP architecture. Written in Kotlin v1.1.1.
 Use example of Twitter SDK with custom TwitterApiClient.
